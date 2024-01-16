@@ -1,0 +1,25 @@
+/* TitleBar.css */
+
+.titlebar {
+    justify-content: end;
+    justify-items: center;
+    display: flex;
+    background-color: var(--primary-color);
+    color: var(--font-color);
+    user-select: none;
+}
+
+.titlebar-button {
+    display: flex;
+    cursor: pointer;
+    padding: 15px;
+}
+
+#titlebar-minimize:hover,
+#titlebar-maximize:hover {
+    background-color: #555;
+}
+
+#titlebar-close:hover {
+    background-color: rgb(255, 112, 112);
+}

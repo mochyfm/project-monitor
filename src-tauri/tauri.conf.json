@@ -12,7 +12,22 @@
   },
   "tauri": {
     "allowlist": {
-      "all": false
+      "http": {
+        "all": false,
+        "request": false,
+        "scope": ["http://127.0.0.1:3001/*"]
+      },
+      "window": {
+        "all": false,
+        "close": true,
+        "hide": true,
+        "show": true,
+        "maximize": true,
+        "minimize": true,
+        "unmaximize": true,
+        "unminimize": true,
+        "startDragging": true
+      }
     },
     "bundle": {
       "active": true,
@@ -59,7 +74,8 @@
         "height": 600,
         "resizable": true,
         "title": "Project Monitor",
-        "width": 800
+        "width": 800,
+        "decorations": false
       }
     ]
   }
