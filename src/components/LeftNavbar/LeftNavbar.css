@@ -1,0 +1,30 @@
+.leftNavbar {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: var(--titlebar-height);
+    left: 0;
+    height: var(--leftnav-height);
+    width: var(--leftnav-width);
+    border-right: 1px solid var(--border-color);
+        background-color: var(--primary-color);
+    justify-content: end;
+    justify-items: center;
+    display: flex;
+}
+
+.buttonsPanel {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 20px;
+    width: 100%;
+}
+
+.bottomPanel {
+    display: flex;
+    flex: 1;
+    width: 100%;
+}
+

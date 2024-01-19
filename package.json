@@ -18,7 +18,8 @@
     "fastify": "^4.25.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-icons": "^5.0.1"
+    "react-icons": "^5.0.1",
+    "react-router-dom": "^6.21.3"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.5.8",

@@ -1,0 +1,43 @@
+[
+    {
+      "name": "Innowide",
+      "launcheables": [
+        { 
+          "name": "FrontEnd",
+          "language": "JavaScript",
+          "communityIDE": "Visual Studio Code",
+          "path": "C:\\Users"
+        },
+        { 
+          "name": "BackEnd",
+          "language": "Java",
+          "communityIDE": "IntelliJ Idea Community",
+          "path": "C:\\Users"
+        }
+      ],
+      "dockerList": [
+        { 
+          "containerId": "X",
+          "name": "ElasticSearch",
+          "image": "X",
+          "version": "1.0.0"
+        },
+        { 
+          "containerId": "X",
+          "name": "PostgreSQL",
+          "image": "X",
+          "version": "1.0.0"
+        }
+      ]
+    },
+    {
+      "name": "Office Access Tracker",
+      "launcheables": [
+        {}
+      ]
+    },
+    {
+      "name": "DMS"
+    }
+  ]
+  

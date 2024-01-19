@@ -3,9 +3,9 @@ import { FaRegWindowMinimize  } from 'react-icons/fa'
 import { LuMaximize } from 'react-icons/lu'
 import { GrClose } from 'react-icons/gr'
 import './TitleBar.css'
+import Constants from '../../constants/options.constants';
 
 const TitleBar = () => {
-    const iconsSize: number = 12
 
     return (
         <>
@@ -15,21 +15,21 @@ const TitleBar = () => {
                     id='titlebar-minimize'
                     onClick={() => appWindow.minimize()}
                 >
-                    <FaRegWindowMinimize size={iconsSize} />
+                    <FaRegWindowMinimize size={Constants.iconsSize} className='toolbar-icon'/>
                 </div>
                 <div
                     className='titlebar-button'
                     id='titlebar-maximize'
                     onClick={() => appWindow.toggleMaximize()}
                 >
-                    <LuMaximize size={iconsSize} />
+                    <LuMaximize size={Constants.iconsSize + 3} className='toolbar-icon'/>
                 </div>
                 <div
                     className='titlebar-button'
                     id='titlebar-close'
                     onClick={() => appWindow.close()}
                 >
-                    <GrClose size={iconsSize} />
+                    <GrClose size={Constants.iconsSize + 2} className='toolbar-icon'/>
                 </div>
             </div>
         </>

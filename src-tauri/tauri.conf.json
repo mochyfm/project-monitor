@@ -7,15 +7,26 @@
     "distDir": "../build"
   },
   "package": {
-    "productName": "project-monitor",
+    "productName": "project_monitor",
     "version": "0.1.0"
   },
   "tauri": {
     "allowlist": {
-      "http": {
-        "all": false,
-        "request": false,
-        "scope": ["http://127.0.0.1:3001/*"]
+      "path": {
+        "all": true
+      },
+      "fs": {
+        "all": true, 
+        "readFile": true,
+        "writeFile": true,
+        "readDir": true,
+        "copyFile": true,
+        "createDir": true,
+        "removeDir": true,
+        "removeFile": true,
+        "renameFile": true,
+        "exists": true,
+        "scope": ["$DOCUMENT/ProjectMonitor/resources", "$RESOURCE/resources/*"]
       },
       "window": {
         "all": false,
@@ -44,7 +55,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "project_monitor",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -53,7 +64,7 @@
         "providerShortName": null,
         "signingIdentity": null
       },
-      "resources": [],
+      "resources": ["./resources/*"],
       "shortDescription": "",
       "targets": "all",
       "windows": {
@@ -70,12 +81,16 @@
     },
     "windows": [
       {
-        "fullscreen": false,
+        "width": 800,
         "height": 600,
+        "minHeight": 600,
+        "minWidth": 700,
         "resizable": true,
         "title": "Project Monitor",
-        "width": 800,
-        "decorations": false
+        "maximized": true,
+        "decorations": false,
+        "fileDropEnabled": true,
+        "theme": "Dark"
       }
     ]
   }

@@ -5,9 +5,21 @@
 }
 
 :root {
-    --primary-color: #0f0f0f;
-    --secondary-color: #181818;
+    --primary-color: #1f1f1f;
+    --secondary-color: #333;
     --font-color: #FFF;
+    --border-color: #585858;
+
+    --toolbar-icon-color: #d1d1d1;
+
+    --close-hover-button-color: #FF5656;
+    --hover-button-color: #333;
+    --leftNavbar-button-background-color: #d1d1d1;
+
+    --titlebar-height: 5vh;
+    --leftnav-height: 95vh;
+    --leftnav-width: 15%;
+
     --font-family: 'Segoe UI', 'system-ui';
 }
 

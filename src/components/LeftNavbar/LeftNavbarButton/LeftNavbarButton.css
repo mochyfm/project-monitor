@@ -1,0 +1,35 @@
+.leftNavbarButton {
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+    border: 1px solid var(--leftNavbar-button-background-color);
+    padding: 5px 15px;
+}
+
+.leftNavbarButton:hover {
+    background-color: var(--leftNavbar-button-background-color);
+    cursor: pointer;
+}
+
+.leftNavbarButtonName {
+    color: var(--font-color);
+}
+
+.leftNavbarButton {
+    display: block;
+}
+
+.leftNavbarButtonIcon {
+    display: none;
+}
+
+@media screen and (max-width: 700px) and (max-height: 600px) {
+    .leftNavbarButton {
+        display: none;
+    }
+    
+    .leftNavbarButtonIcon {
+        display: block;
+    }
+    
+}
