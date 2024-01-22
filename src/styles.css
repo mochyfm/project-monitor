@@ -4,6 +4,10 @@
     margin: 0;
 }
 
+html {
+    overflow: hidden;
+}
+
 :root {
     --primary-color: #1f1f1f;
     --secondary-color: #333;
@@ -18,7 +22,14 @@
 
     --titlebar-height: 5vh;
     --leftnav-height: 95vh;
-    --leftnav-width: 15%;
+    --insidepage-height: var(--leftnav-height);
+    --insidepage-width: calc(100% - var(--prehover-leftnav-width));
+    --insidepage-top: var(--titlebar-height);
+    --insidepage-left: var(--prehover-leftnav-width);
+    --posthover-leftnav-width: 20%;
+    --prehover-leftnav-width: 5%;
+
+    --font-size: 1.2rem;
 
     --font-family: 'Segoe UI', 'system-ui';
 }

@@ -1,0 +1,69 @@
+[
+    {
+      "id": "0",
+      "name": "Innowide",
+      "launcheables": [
+        { 
+          "name": "FrontEnd",
+          "language": "JavaScript",
+          "preferedIde": "Visual Studio Code",
+          "path": "C:\\Users\\Moisés\\DST - Projects\\Innowide\\innowide-rendicontazione-fe"
+        },
+        { 
+          "name": "BackEnd",
+          "language": "Java",
+          "preferedIde": "IntelliJ Idea Community",
+          "path": "C:\\Users\\Moisés\\DST - Projects\\Innowide\\innowide-rendicontazione-be"
+        },
+        { 
+          "name": "BackEnd",
+          "language": "Java",
+          "preferedIde": "IntelliJ Idea Community",
+          "path": "C:\\Users\\Moisés\\DST - Projects\\Innowide\\innowide-rendicontazione-be"
+        },
+        { 
+          "name": "BackEnd",
+          "language": "Java",
+          "preferedIde": "IntelliJ Idea Community",
+          "path": "C:\\Users\\Moisés\\DST - Projects\\Innowide\\innowide-rendicontazione-be"
+        },
+        { 
+          "name": "BackEnd",
+          "language": "Java",
+          "preferedIde": "IntelliJ Idea Community",
+          "path": "C:\\Users\\Moisés\\DST - Projects\\Innowide\\innowide-rendicontazione-be"
+        },
+        { 
+          "name": "BackEnd",
+          "language": "Java",
+          "preferedIde": "IntelliJ Idea Community",
+          "path": "C:\\Users\\Moisés\\DST - Projects\\Innowide\\innowide-rendicontazione-be"
+        },
+        { 
+          "name": "BackEnd",
+          "language": "Java",
+          "preferedIde": "IntelliJ Idea Community",
+          "path": "C:\\Users\\Moisés\\DST - Projects\\Innowide\\innowide-rendicontazione-be"
+        },
+        { 
+          "name": "BackEnd",
+          "language": "Java",
+          "preferedIde": "IntelliJ Idea Community",
+          "path": "C:\\Users\\Moisés\\DST - Projects\\Innowide\\innowide-rendicontazione-be"
+        },
+        { 
+          "name": "BackEnd",
+          "language": "Java",
+          "preferedIde": "IntelliJ Idea Community",
+          "path": "C:\\Users\\Moisés\\DST - Projects\\Innowide\\innowide-rendicontazione-be"
+        },
+        { 
+          "name": "BackEnd",
+          "language": "Java",
+          "preferedIde": "IntelliJ Idea Community",
+          "path": "C:\\Users\\Moisés\\DST - Projects\\Innowide\\innowide-rendicontazione-be"
+        }
+      ]
+    }
+]
+  

@@ -26,7 +26,7 @@
         "removeFile": true,
         "renameFile": true,
         "exists": true,
-        "scope": ["$DOCUMENT/ProjectMonitor/resources", "$RESOURCE/resources/*"]
+        "scope": ["$RESOURCE/resources/*", "$APPDATA/*", "$HOME/*", "$RUNTIME/*"]
       },
       "window": {
         "all": false,

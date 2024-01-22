@@ -1,0 +1,21 @@
+.dashboardLayer {
+    position: relative;
+    height: var(--insidepage-height);
+    width: var(--insidepage-width);
+    top: var(--insidepage-top);
+    left: var(--insidepage-left);
+}
+
+.opacityLayer {
+    top: 0;
+    position: absolute;
+    height: var(--insidepage-height);
+    width: var(--insidepage-width);
+    top: var(--insidepage-top);
+    left: var(--insidepage-left);
+    background-color: #000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+

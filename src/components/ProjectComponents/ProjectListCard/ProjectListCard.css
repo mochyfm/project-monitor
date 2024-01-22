@@ -1,0 +1,29 @@
+.projectListCardBody {
+    background-color: var(--primary-color);
+    border-radius: 20px;
+    padding: 20px 30px;
+    width: 100%;
+}
+
+.projectListProjectName {
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+    background-color: var(--secondary-color);
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.projectListCardLauncheables {
+    border-radius: 10px;
+    background-color: var(--secondary-color);
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; 
+    width: 100%;
+}
+
+.projectListCardLauncheable {
+    
+}

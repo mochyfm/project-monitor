@@ -1,0 +1,70 @@
+.launcheableCard {
+    background-color: var(--primary-color);
+    border-radius: 20px;
+    margin: 15px;
+    padding: 20px;
+    position: relative;
+    flex-basis: calc(45% - 20px);
+}
+
+.launcheableName {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.launcheableIcon {
+    position: absolute;
+    width: 50px;
+    top: 10px;
+    right: 10px;
+}
+
+.launcheableLang {
+}
+
+.launcheableIde {
+}
+
+.launcheablePath {
+}
+
+.launcheableDropButton {
+    align-self: flex-end;
+    position: absolute;
+    right: 5%;
+    bottom: 10%;
+}
+
+.launcheableDropButton:hover {
+    cursor: pointer;
+}
+
+.launcheableCardButtonPanel {
+    position: absolute;
+    top: calc(100% + 10px); /* Posición debajo del botón */
+    left: 50%; /* Centrado horizontalmente */
+    transform: translateX(-50%);
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    display: none;
+    justify-content: space-evenly;
+    margin-top: 25px;
+    background-color: white; /* Fondo blanco para el menú */
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para un aspecto elevado */
+}
+
+.displayMenu {
+    display: absolute;
+}
+
+.hideMenu {
+    display: none;
+}
+
+.launcheableCardEdit {
+}
+
+.launcheableCardDelete {
+}

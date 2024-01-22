@@ -1,0 +1,24 @@
+.projectsList {
+    padding: 50px;
+    overflow-y: auto;
+}
+
+.addProject {
+    display: flex;
+    align-items: center;
+    border-radius: 60%;
+    color: var(--font-color);
+    background-color: var(--primary-color);
+    border: 1.5px solid var(--primary-color);
+    position: fixed;
+    padding: 15px;
+    bottom: 5%;
+    right: 5%;
+}
+
+.addProject:hover {
+    cursor: pointer;
+    background-color: var(--secondary-color);
+    border: 1.5px solid var(--primary-color);
+    color: var(--primary-color);
+}

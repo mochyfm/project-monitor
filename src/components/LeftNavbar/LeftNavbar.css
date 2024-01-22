@@ -5,20 +5,40 @@
     top: var(--titlebar-height);
     left: 0;
     height: var(--leftnav-height);
-    width: var(--leftnav-width);
+    width: var(--prehover-leftnav-width);
     border-right: 1px solid var(--border-color);
-        background-color: var(--primary-color);
+    background-color: var(--primary-color);
     justify-content: end;
     justify-items: center;
     display: flex;
+    transition: width 0.3s ease;
+    z-index: 2;
+}
+
+.leftNavbar:hover {
+    width: var(--posthover-leftnav-width);
+}
+
+.leftNavbar:hover + .opacityLayer {
+    opacity: 0.5;
+}
+
+.leftNavbarButtonHoverAnimation {
+    opacity: 0;
+    display: none;
+    transition: opacity 0.3s ease, display 0s linear 0.3s;
+}
+
+.leftNavbar:hover .leftNavbarButtonHoverAnimation{
+    display: block;
+    opacity: 1;
 }
 
 .buttonsPanel {
     flex: 3;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    padding: 20px;
+    align-items: center;
     width: 100%;
 }
 
@@ -28,3 +48,8 @@
     width: 100%;
 }
 
+@media ((min-width: 700px) and (min-height: 600px)) and (max-width: 1200px) {
+    .leftNavbar {
+        width: var(--leftnav-media-width);
+    }
+}

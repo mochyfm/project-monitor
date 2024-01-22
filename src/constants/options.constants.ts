@@ -1,5 +1,5 @@
 const Constants = {
-    settings_file: 'resources/collections.json',
+    savedProjectsFile: 'resources\\collection.json',
     iconsSize: 12
 }
 

@@ -13,6 +13,7 @@
     color: var(--font-color);
     user-select: none;
     border-bottom: 1px solid var(--border-color);
+    z-index: 1;
 }
 
 .titlebar-button {

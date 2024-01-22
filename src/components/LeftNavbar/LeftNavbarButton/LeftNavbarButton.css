@@ -1,9 +1,12 @@
 .leftNavbarButton {
     display: flex;
-    justify-content: center;
-    border-radius: 5px;
-    border: 1px solid var(--leftNavbar-button-background-color);
-    padding: 5px 15px;
+    border-radius: 10px;
+    justify-content: space-evenly;
+    /* border-top: 1px solid var(--leftNavbar-button-background-color);
+    border-bottom: 1px solid var(--leftNavbar-button-background-color); */
+    padding: 15px 15px;
+    margin: 15px 0px;
+    width: 80%;
 }
 
 .leftNavbarButton:hover {
@@ -13,18 +16,16 @@
 
 .leftNavbarButtonName {
     color: var(--font-color);
-}
-
-.leftNavbarButton {
-    display: block;
+    font-size: var(--font-size);
 }
 
 .leftNavbarButtonIcon {
+    opacity: 1;
     display: none;
 }
 
-@media screen and (max-width: 700px) and (max-height: 600px) {
-    .leftNavbarButton {
+@media ((min-width: 700px) and (min-height: 600px)) and (max-width: 1200px) {
+    .leftNavbarButtonName {
         display: none;
     }
     
