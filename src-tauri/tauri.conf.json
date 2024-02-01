@@ -1,97 +1,124 @@
 {
-  "$schema": "../node_modules/@tauri-apps/cli/schema.json",
-  "build": {
-    "beforeBuildCommand": "npm run build",
-    "beforeDevCommand": "npm run dev",
-    "devPath": "http://localhost:1420",
-    "distDir": "../build"
-  },
-  "package": {
-    "productName": "project_monitor",
-    "version": "0.1.0"
-  },
-  "tauri": {
-    "allowlist": {
-      "path": {
-        "all": true
-      },
-      "fs": {
-        "all": true, 
-        "readFile": true,
-        "writeFile": true,
-        "readDir": true,
-        "copyFile": true,
-        "createDir": true,
-        "removeDir": true,
-        "removeFile": true,
-        "renameFile": true,
-        "exists": true,
-        "scope": ["$RESOURCE/resources/*", "$APPDATA/*", "$HOME/*", "$RUNTIME/*"]
-      },
-      "window": {
-        "all": false,
-        "close": true,
-        "hide": true,
-        "show": true,
-        "maximize": true,
-        "minimize": true,
-        "unmaximize": true,
-        "unminimize": true,
-        "startDragging": true
-      }
+    "$schema": "../node_modules/@tauri-apps/cli/schema.json",
+    "build": {
+        "beforeBuildCommand": "npm run build",
+        "beforeDevCommand": "npm run dev",
+        "devPath": "http://localhost:1420",
+        "distDir": "../build"
     },
-    "bundle": {
-      "active": true,
-      "category": "DeveloperTool",
-      "copyright": "",
-      "deb": {
-        "depends": []
-      },
-      "externalBin": [],
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ],
-      "identifier": "project_monitor",
-      "longDescription": "",
-      "macOS": {
-        "entitlements": null,
-        "exceptionDomain": "",
-        "frameworks": [],
-        "providerShortName": null,
-        "signingIdentity": null
-      },
-      "resources": ["./resources/*"],
-      "shortDescription": "",
-      "targets": "all",
-      "windows": {
-        "certificateThumbprint": null,
-        "digestAlgorithm": "sha256",
-        "timestampUrl": ""
-      }
+    "package": {
+        "productName": "project_monitor",
+        "version": "0.1.0"
     },
-    "security": {
-      "csp": null
-    },
-    "updater": {
-      "active": false
-    },
-    "windows": [
-      {
-        "width": 800,
-        "height": 600,
-        "minHeight": 600,
-        "minWidth": 700,
-        "resizable": true,
-        "title": "Project Monitor",
-        "maximized": true,
-        "decorations": false,
-        "fileDropEnabled": true,
-        "theme": "Dark"
-      }
-    ]
-  }
+    "tauri": {
+        "allowlist": {
+            "path": {
+                "all": true
+            },
+            "dialog": {
+                "ask": true,
+                "confirm": true,
+                "message": true,
+                "open": true,
+                "save": true
+            },
+            "shell": {
+                "execute": true,
+                "open": true,
+                "sidecar": true,
+                "scope": [
+                    {
+                        "name": "launch-vscode",
+                        "cmd": "vscode",
+                        "args": true
+                    },
+                    {
+                        "name": "launch-intellij",
+                        "cmd": "idea",
+                        "args": true
+                    }
+                ]
+            },
+            "fs": {
+                "readFile": true,
+                "writeFile": true,
+                "readDir": true,
+                "copyFile": true,
+                "createDir": true,
+                "removeDir": true,
+                "removeFile": true,
+                "renameFile": true,
+                "exists": true,
+                "scope": [
+                    "$RESOURCE/resources/*",
+                    "$APPDATA/*",
+                    "$HOME/*",
+                    "$RUNTIME/*"
+                ]
+            },
+            "window": {
+                "close": true,
+                "hide": true,
+                "show": true,
+                "maximize": true,
+                "minimize": true,
+                "unmaximize": true,
+                "unminimize": true,
+                "startDragging": true
+            }
+        },
+        "bundle": {
+            "active": true,
+            "category": "DeveloperTool",
+            "copyright": "",
+            "deb": {
+                "depends": []
+            },
+            "externalBin": [],
+            "icon": [
+                "icons/32x32.png",
+                "icons/128x128.png",
+                "icons/128x128@2x.png",
+                "icons/icon.icns",
+                "icons/icon.ico"
+            ],
+            "identifier": "project_monitor",
+            "longDescription": "",
+            "macOS": {
+                "entitlements": null,
+                "exceptionDomain": "",
+                "frameworks": [],
+                "providerShortName": null,
+                "signingIdentity": null
+            },
+            "resources": ["./resources/*"],
+            "shortDescription": "",
+            "targets": "all",
+            "windows": {
+                "certificateThumbprint": null,
+                "digestAlgorithm": "sha256",
+                "timestampUrl": ""
+            }
+        },
+        "security": {
+            "csp": null
+        },
+        "updater": {
+            "active": false
+        },
+        "windows": [
+            {
+                "width": 800,
+                "height": 600,
+                "minHeight": 600,
+                "minWidth": 700,
+                "resizable": true,
+                "title": "Project Monitor",
+                "maximized": true,
+                "decorations": false,
+                "fileDropEnabled": true,
+                "theme": "Dark"
+            }
+        ]
+    }
 }

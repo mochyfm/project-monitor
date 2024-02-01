@@ -29,6 +29,12 @@ html {
     --posthover-leftnav-width: 20%;
     --prehover-leftnav-width: 5%;
 
+    --button-bg-color: #c2c2c2;
+    --button-color: #333;
+
+    --button-hover-bg-color: #1f1f1f;
+    --button-hover-color: var(--font-color)
+
     --font-size: 1.2rem;
 
     --font-family: 'Segoe UI', 'system-ui';

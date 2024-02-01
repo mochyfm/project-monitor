@@ -1,18 +1,19 @@
-import { ProgrammingLanguage } from "./interface.types";
+import { CompatibleIDEs, CompatibleSDK, ProgrammingLanguage } from "./interface.types";
 
 export type Collection = Project[]
 
 export interface Project {
   id: number;
-  name: string
+  name: string;
   launcheables?: Launcheable[]
   dockerList?: DockerElement[]
 }
 
 export interface Launcheable {
   name?: string
+  sdk: CompatibleSDK;
   language?: ProgrammingLanguage
-  preferedIde?: string
+  preferedIde?: CompatibleIDEs
   path?: string
 }
 

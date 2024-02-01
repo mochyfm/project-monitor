@@ -1,29 +1,29 @@
 .projectListCardBody {
     background-color: var(--primary-color);
-    border-radius: 20px;
+    border-radius: 7px;
     padding: 20px 30px;
     width: 100%;
 }
 
 .projectListProjectName {
     display: flex;
-    justify-content: center;
-    border-radius: 10px;
-    background-color: var(--secondary-color);
     margin-bottom: 20px;
-    padding: 10px;
+}
+
+.projectLauncheablesName {
+    display: flex;
+    margin-top: 20px;
 }
 
 .projectListCardLauncheables {
     border-radius: 10px;
-    background-color: var(--secondary-color);
     padding: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around; 
+    display: grid;
+    gap: 20px;
     width: 100%;
+    margin: 0;
 }
 
-.projectListCardLauncheable {
-    
+.projectListCardLauncheables > :nth-last-child(1):nth-child(odd) {
+    grid-column: span 2;
 }

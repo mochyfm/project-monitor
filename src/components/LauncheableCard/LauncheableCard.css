@@ -1,23 +1,100 @@
 .launcheableCard {
-    background-color: var(--primary-color);
+    box-sizing: border-box;
+    background-color: var(--secondary-color);
     border-radius: 20px;
-    margin: 15px;
+    height: 450px;
     padding: 20px;
     position: relative;
-    flex-basis: calc(45% - 20px);
+}
+
+.launcheableHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.launcheableSdk span,
+.launcheablePromLanguage span {
+    font-size: 1rem;
+    margin-right: 5px;
+}
+
+.launcheableSdk span  {
+    margin-right: 10px;
 }
 
 .launcheableName {
     display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
+    margin: auto;
 }
 
-.launcheableIcon {
-    position: absolute;
-    width: 50px;
-    top: 10px;
-    right: 10px;
+.sdkIcon {
+    width: 30px;
+}
+
+.promLangIcon {
+    width: 35px;
+}
+
+.ideIcon {
+    width: 45px;
+    margin-left: 5px;
+}
+
+.launcheableIde,
+.launcheableSdk,
+.launcheablePromLanguage {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--primary-color);
+    border-radius: 20px;
+    padding: 10px;
+    height: 55px;
+}
+
+.launcheableSdk, .launcheablePromLanguage {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px 20px;
+}
+
+.launcheablePromLanguage {
+    margin-left: 20px;
+}
+
+.launcheableIde {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.innerIdeLabel {
+    display: flex;
+    align-items: center;
+}
+
+.innerIdeLabel img {
+    margin-right: 20px;
+}
+
+.launcheableIde button {
+    margin-right: 15px;
+    border-radius: 5px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    background-color: var(--button-bg-color);
+    color: var(--button-color);
+    border: none;
+    padding: 5px 10px;
+    transition: ease-in 0.2s background-color;
+}
+
+.launcheableCard button:hover {
+    transition: ease-in 0.2s background-color;
+    transition: ease-in 0.2s color;
+    background-color: var(--button-hover-bg-color);
+    color: var(--button-hover-color);
+    cursor: pointer;
 }
 
 .launcheableLang {
@@ -32,8 +109,8 @@
 .launcheableDropButton {
     align-self: flex-end;
     position: absolute;
-    right: 5%;
-    bottom: 10%;
+    right: 4%;
+    bottom: 4%;
 }
 
 .launcheableDropButton:hover {

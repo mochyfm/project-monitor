@@ -20,6 +20,10 @@ export type ProgrammingLanguage =
     | 'Perl'
     | 'Other';
 
+export type CompatibleIDEs = 'vscode' | 'intellij' | 'intellij_community' | 'eclipse' | 'sublime' | 'notepad_pp' | 'vs_ide'
+export type CompatibleSDK = 'node' | 'springboot';
+
+
 export interface LeftNavbarButtonOptions {
     name: string
     link?: string
@@ -41,6 +45,6 @@ export interface ProjectListCardProperties {
     name: string
     launcheables?: Launcheable[]
     dockers?: DockerElement[]
+    node_version: string;
 }
 
-export type LauncheableCardProps = Launcheable

@@ -5,6 +5,7 @@ export const assignDataFromJson = (json: any): Collection => {
         const { id, name, launcheables, dockerList } = item
 
         const project: Project = {
+            id,
             name,
             launcheables: assignLauncheables(launcheables),
             dockerList: assignDockerList(dockerList),

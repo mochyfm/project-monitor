@@ -8,6 +8,7 @@
 
 .opacityLayer {
     top: 0;
+    pointer-events: none;   
     position: absolute;
     height: var(--insidepage-height);
     width: var(--insidepage-width);
