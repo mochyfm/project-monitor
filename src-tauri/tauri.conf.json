@@ -28,13 +28,8 @@
                 "sidecar": true,
                 "scope": [
                     {
-                        "name": "launch-vscode",
-                        "cmd": "vscode",
-                        "args": true
-                    },
-                    {
-                        "name": "launch-intellij",
-                        "cmd": "idea",
+                        "name": "cmd",
+                        "cmd": "cmd",
                         "args": true
                     }
                 ]
@@ -55,6 +50,9 @@
                     "$HOME/*",
                     "$RUNTIME/*"
                 ]
+            },
+            "notification": {
+                "all": true
             },
             "window": {
                 "close": true,

@@ -2,7 +2,9 @@ import { invoke } from '@tauri-apps/api'
 import { BaseDirectory, readTextFile } from '@tauri-apps/api/fs'
 import Constants from '../constants/options.constants'
 
-export const fetchProjectsFromResources = async () => {}
+export const findProjectFile = async (path: string) => {
+  return await invoke('find_project_file', { path })
+}
 
 export const getProjects = async () => {
     try {
@@ -16,8 +18,6 @@ export const getProjects = async () => {
       throw error; 
     }
   };
-
-export const fetchProjectFromResources = async (projectId: number) => {}
 
 export const findFileFromPath = async (file_path: File) => {
     return await invoke('find-file', { file_path })

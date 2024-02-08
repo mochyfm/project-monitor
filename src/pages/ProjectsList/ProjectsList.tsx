@@ -12,20 +12,20 @@ const ProjectsList = () => {
     const [nodeVersion, setNodeVersion] = useState<string>('')
 
     useEffect(() => {
-        
-        const fetchProjects = async () => {
-            const projects = await getProjects()
-            console.log(projects)
+        const fetchData = async () => {
+            const [projects, version] = await Promise.all([
+                getProjects(),
+                invoke<string>('get_node_version').catch(err => {
+                    console.error(err)
+                    return ''
+                })
+            ])
+            console.log(projects);
             setProjectsList(projects)
+            setNodeVersion(version)
         }
 
-        const fetchNodeVersion = async () => {
-            const version = await invoke<string>('get_node_version').catch((err) => console.error(err))
-            version && setNodeVersion(version);
-        }
-
-        fetchNodeVersion()
-        fetchProjects()
+        fetchData()
     }, [])
 
     return (

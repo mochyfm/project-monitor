@@ -8,7 +8,7 @@
           "sdk": "node",
           "language": "JavaScript",
           "preferedIde": "vscode",
-          "path": "C:\\Users\\Moisés\\DST - Projects\\Innowide\\innowide-rendicontazione-fe",
+          "path": "C:\\Users\\Moisés\\DST_Projects\\Innowide\\innowide-rendicontazione-fe",
           "technologies": [
             {
               "name": "@angular/core",
@@ -25,14 +25,14 @@
           "sdk": "springboot",
           "language": "Java",
           "preferedIde": "intellij_community",
-          "path": "C:\\Users\\Moisés\\DST - Projects\\Innowide\\innowide-rendicontazione-be"
+          "path": "C:\\Users\\Moisés\\DST_Projects\\Innowide\\innowide-rendicontazione-be"
         },
         { 
           "name": "MultiTenant",
           "sdk": "springboot",
           "language": "Java",
-          "preferedIde": "eclipse",
-          "path": "C:\\Users\\Moisés\\DST - Projects\\Innowide\\innowide-rendicontazione-be"
+          "preferedIde": "intellij_community",
+          "path": "C:\\Users\\Moisés\\DST_Projects\\Innowide\\DstJpaSecurityMultiTenant"
         }
       ]
     }

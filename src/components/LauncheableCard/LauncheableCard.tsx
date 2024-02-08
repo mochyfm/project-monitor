@@ -4,8 +4,10 @@ import './LauncheableCard.css'
 import { IoSettingsSharp, IoSettingsOutline } from 'react-icons/io5'
 import { renderPreferedIde, renderSdk } from '../../utils/project.utils'
 import { Launcheable } from '../../types/application.types'
-import { Command } from '@tauri-apps/api/shell'
+import { Child, Command } from '@tauri-apps/api/shell'
 import { CompatibleIDEs } from '../../types/interface.types'
+import { sendNotification } from '@tauri-apps/api/notification'
+import { findProjectFile } from '../../utils/fetch.utils'
 
 export interface LauncheableCardProps extends Launcheable {
     node_version: string
@@ -22,34 +24,65 @@ const LauncheableCard = ({
     const [isSettingsIconVisible, setSettingsIconVisibility] =
         useState<boolean>(false)
 
-    const [ideToLaunch, setIdeToLaunch] = useState<CompatibleIDEs | undefined>(
+    const [ideToLaunch, setIdeToLaunch] = useState<string | undefined>(
         preferedIde,
     )
 
-    const ideLaunchCommand = new Command(`launch-${ideToLaunch}`, `${path}`)
+    function tieneEspacios(path: string) {
+        const partes = path.split('\\')
+        for (let parte of partes) {
+            if (parte.includes(' ')) {
+                return true
+            }
+        }
+        return false
+    }
 
     const openIde = () => {
-        console.log(ideLaunchCommand)
-        console.log(`Launching IDE: ${ideToLaunch}`)
-        ideLaunchCommand.execute()
+        if (path && !tieneEspacios(path)) {
+            console.log(`Launching IDE: ${ideToLaunch}`)
+            const ideLaunchCommand = new Command(
+                'cmd',
+                ['/c', `start /B /MIN ${ideToLaunch} .`],
+                { cwd: path },
+            )
+            try {
+                ideLaunchCommand.execute()
+                sendNotification({
+                    title: `Launching ${
+                        preferedIde ? renderPreferedIde(preferedIde) : `...`
+                    }`,
+                    icon: `../../src/assets/icons/sdk/${sdk}.png`,
+                    body: 'Opening in a new tab',
+                })
+            } catch (error) {
+                console.error(error)
+            }   
+        }
     }
 
     useEffect(() => {
-        if (preferedIde === 'intellij_community') {
-            setIdeToLaunch('intellij')
-        } else {
-            setIdeToLaunch(preferedIde)
+        switch (preferedIde) {
+            case 'intellij_community':
+            case 'intellij':
+                setIdeToLaunch('idea')
+            break;
+            case 'vscode':
+                setIdeToLaunch('code')
+            break;
+            default:
+                setIdeToLaunch('code')
         }
+ 
+        const projectStructure = async () => {
+            path && findProjectFile(path).then((projectData) => {
+                console.log(projectData);
+            })
+            
+        }
+        projectStructure();
 
-        ideLaunchCommand.on('close', (data) => {
-            console.error(
-                `Command finished with code ${data.code} and signal ${data.signal}`,
-            )
-        })
-        ideLaunchCommand.on('error', (error) =>
-            console.error(`command error: "${error}"`),
-        )
-    }, [ideLaunchCommand])
+    }, [])
 
     return (
         <section className='launcheableCard'>
