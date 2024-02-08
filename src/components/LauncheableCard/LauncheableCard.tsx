@@ -4,8 +4,7 @@ import './LauncheableCard.css'
 import { IoSettingsSharp, IoSettingsOutline } from 'react-icons/io5'
 import { renderPreferedIde, renderSdk } from '../../utils/project.utils'
 import { Launcheable } from '../../types/application.types'
-import { Child, Command } from '@tauri-apps/api/shell'
-import { CompatibleIDEs } from '../../types/interface.types'
+import { Command } from '@tauri-apps/api/shell'
 import { sendNotification } from '@tauri-apps/api/notification'
 import { findProjectFile } from '../../utils/fetch.utils'
 
@@ -94,7 +93,7 @@ const LauncheableCard = ({
                     }`}</span>
                     <img
                         className='sdkIcon'
-                        src={`../../src/assets/icons/sdk/${sdk}.png`}
+                        src={`/assets/icons/sdk/${sdk}.png`}
                         alt={`${sdk} icon`}
                     />
                 </div>
@@ -102,7 +101,7 @@ const LauncheableCard = ({
                     <span>{language}</span>
                     <img
                         className='promLangIcon'
-                        src={`../../src/assets/icons/prog/${language}.png`}
+                        src={`/assets/icons/prog/${language}.png`}
                         alt={`${language} icon`}
                     />
                 </div>
@@ -111,7 +110,7 @@ const LauncheableCard = ({
                 <div className='innerIdeLabel'>
                     <img
                         className='ideIcon'
-                        src={`../../src/assets/icons/ide/${preferedIde}.png`}
+                        src={`/assets/icons/ide/${preferedIde}.png`}
                         alt={`${
                             preferedIde && renderPreferedIde(preferedIde)
                         } icon`}

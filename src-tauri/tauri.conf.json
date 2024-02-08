@@ -4,10 +4,10 @@
         "beforeBuildCommand": "npm run build",
         "beforeDevCommand": "npm run dev",
         "devPath": "http://localhost:1420",
-        "distDir": "../build"
+        "distDir": "../dist"
     },
     "package": {
-        "productName": "project_monitor",
+        "productName": "project-monitor",
         "version": "0.1.0"
     },
     "tauri": {
@@ -80,7 +80,7 @@
                 "icons/icon.icns",
                 "icons/icon.ico"
             ],
-            "identifier": "project_monitor",
+            "identifier": "project-monitor",
             "longDescription": "",
             "macOS": {
                 "entitlements": null,

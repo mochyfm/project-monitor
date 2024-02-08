@@ -6,10 +6,14 @@ import { FaPlus } from 'react-icons/fa'
 import Constants from '../../constants/options.constants'
 import ProjectListCard from '../../components/ProjectComponents/ProjectListCard'
 import { invoke } from '@tauri-apps/api'
+import { useNavigate } from 'react-router-dom'
+import { Web } from '../../constants/app.constants'
 
 const ProjectsList = () => {
     const [projectsList, setProjectsList] = useState<Collection | null>(null)
     const [nodeVersion, setNodeVersion] = useState<string>('')
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -45,9 +49,9 @@ const ProjectsList = () => {
                         )
                     })}
             </div>
-            <div className='addProject'>
+            <button className='addProject' onClick={() => navigate(Web.newProject.path)}>
                 <FaPlus size={Constants.iconsSize + 10} />
-            </div>
+            </button>
         </div>
     )
 }
