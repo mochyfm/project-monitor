@@ -1,0 +1,5 @@
+.newProjectBody {
+    height: var(--insidepage-height);
+    overflow-y: scroll;
+}
+

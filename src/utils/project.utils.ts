@@ -22,11 +22,15 @@ export const renderPreferedIde = (ide : CompatibleIDEs) => {
     }
 }
 
-export const renderSdk = (sdk : CompatibleSDK) => {
+export const renderSdk = (sdk ?: CompatibleSDK) => {
     switch (sdk) {
         case 'node':
             return 'Node';
         case 'springboot':
-            return 'Spring Boot';    
+            return 'Spring Boot';  
+        case 'maven':
+            return 'Maven'
+        default:
+            return 'unknown';  
     }
 }

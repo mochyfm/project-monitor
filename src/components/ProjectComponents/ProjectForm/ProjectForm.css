@@ -1,0 +1,70 @@
+.projectLauncheablesBlock {
+    border-radius: 10px;
+    height: calc(var(--insidepage-height) - 5vh);
+    padding: 30px;
+    margin: 20px;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+}
+
+.projectInfo {
+    margin: 10px 0px;
+}
+
+.projectInfoInput {
+    border: none;
+    background-color: transparent;
+    font-size: 32px;
+    color: var(--font-color);
+}
+
+.projectInfoInput:focus {
+    outline: none;
+}
+
+.projectLauncheableButtonPanel {
+    display: flex;
+    justify-content: space-between;
+}
+
+.projectFormButton,
+.projectFormClearButton {
+    border-radius: 5px;
+    border: none;
+    margin: 5px;
+    padding: 5px 15px;
+    font-size: 15px;
+    transition: background-color 0.2s ease-in;
+    transition: color 0.1s ease-in;
+}
+
+.projectFormButton:hover,
+.projectFormClearButton:hover {
+    cursor: pointer;
+    color: var(--font-color);
+    transition: background-color 0.2s ease-out;
+    transition: color 0.1s ease-out;
+    background-color: var(--secondary-color);
+}
+
+.launcheablePannel {
+    display: grid;
+    margin: 15px 0px;
+    padding: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
+    gap: 20px;
+    justify-items: stretch;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .launcheablePannel {
+        grid-template-columns: repeat(auto-fill, minmax(40%, 1fr));
+    }
+}
+
+@media (max-width: 576px) {
+    .launcheablePannel {
+        grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+    }
+}

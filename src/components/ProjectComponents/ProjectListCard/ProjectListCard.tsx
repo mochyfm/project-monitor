@@ -4,7 +4,7 @@ import { Launcheable } from '../../../types/application.types'
 import LauncheableCard from '../../LauncheableCard'
 
 const ProjectListCard = (props: ProjectListCardProperties) => {
-    const { id, name, launcheables, node_version } = props
+    const { id, name, launcheables, nodeVersion } = props
 
     return (
         <>
@@ -19,7 +19,7 @@ const ProjectListCard = (props: ProjectListCardProperties) => {
                                 return (
                                     <LauncheableCard
                                         sdk={launcheable.sdk}
-                                        node_version={node_version}
+                                        nodeVersion={nodeVersion}
                                         key={index}
                                         path={launcheable.path}
                                         name={launcheable.name}

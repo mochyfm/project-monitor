@@ -1,6 +1,7 @@
 import { invoke } from '@tauri-apps/api'
 import { BaseDirectory, readTextFile } from '@tauri-apps/api/fs'
 import Constants from '../constants/options.constants'
+import { JsonContent, XmlContent } from '../types/application.types'
 
 export const findProjectFile = async (path: string) => {
   return await invoke('find_project_file', { path })
@@ -21,4 +22,12 @@ export const getProjects = async () => {
 
 export const findFileFromPath = async (file_path: File) => {
     return await invoke('find-file', { file_path })
+}
+
+export const findXmlVersion = (data: XmlContent): string => {
+  const index = data.artifactId.findIndex((item: string) => item === 'spring-boot-starter-parent');
+  if (index !== -1 && index < data.version.length) {
+    return data.version[index];
+  }
+  return 'Maven';
 }

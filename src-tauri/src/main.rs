@@ -33,7 +33,8 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             test_comms,
             get_node_version,
-            utils::project_file_finder::find_project_file
+            utils::project_file_finder::find_project_file,
+            utils::project_java_launch_finder::find_java_main
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

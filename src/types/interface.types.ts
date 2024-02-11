@@ -1,5 +1,5 @@
 import { IconType } from 'react-icons'
-import { DockerElement, Launcheable } from './application.types'
+import { DockerElement, Launcheable, Project } from './application.types'
 
 export type ProgrammingLanguage =
     | 'JavaScript'
@@ -21,8 +21,11 @@ export type ProgrammingLanguage =
     | 'Other';
 
 export type CompatibleIDEs = 'vscode' | 'intellij' | 'intellij_community' | 'eclipse' | 'sublime' | 'notepad_pp' | 'vs_ide'
-export type CompatibleSDK = 'node' | 'springboot';
+export type CompatibleSDK = 'node' | 'springboot' | 'maven';
 
+export interface PageProps {
+    nodeVersion ?: string;
+}
 
 export interface LeftNavbarButtonOptions {
     name: string
@@ -40,11 +43,8 @@ export interface ProjectMonitorParams {
     className?: string
 }
 
-export interface ProjectListCardProperties {
-    id: number
-    name: string
-    launcheables?: Launcheable[]
-    dockers?: DockerElement[]
-    node_version: string;
+export interface ProjectListCardProperties extends Project, PageProps {
 }
 
+export interface LauncheableCardProps extends Launcheable, PageProps {
+}

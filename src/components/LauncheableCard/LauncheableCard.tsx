@@ -7,10 +7,7 @@ import { Launcheable } from '../../types/application.types'
 import { Command } from '@tauri-apps/api/shell'
 import { sendNotification } from '@tauri-apps/api/notification'
 import { findProjectFile } from '../../utils/fetch.utils'
-
-export interface LauncheableCardProps extends Launcheable {
-    node_version: string
-}
+import { LauncheableCardProps } from '../../types/interface.types'
 
 const LauncheableCard = ({
     name,
@@ -18,7 +15,7 @@ const LauncheableCard = ({
     sdk,
     preferedIde,
     path,
-    node_version,
+    nodeVersion,
 }: LauncheableCardProps) => {
     const [isSettingsIconVisible, setSettingsIconVisibility] =
         useState<boolean>(false)
@@ -89,7 +86,7 @@ const LauncheableCard = ({
                 <h3 className='launcheableName'>{name}</h3>
                 <div className='launcheableSdk'>
                     <span>{`${renderSdk(sdk)} ${
-                        sdk === 'node' ? node_version : ''
+                        sdk === 'node' ? (nodeVersion !== undefined ? nodeVersion : 'Not Installed') : ''
                     }`}</span>
                     <img
                         className='sdkIcon'

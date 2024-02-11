@@ -2,14 +2,19 @@ use std::collections::HashMap;
 use std::fs;
 use std::io;
 use std::path::{Path, PathBuf};
-use serde::Serialize;
-use serde_json::Value;
+use serde::{Serialize, Deserialize};
 use xml::reader::{EventReader, XmlEvent};
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Deserialize)]
+pub enum ProjectContent {
+    Json(HashMap<String, serde_json::Value>),
+    Xml(HashMap<String, Vec<String>>),
+}
+
+#[derive(Debug, Serialize, Deserialize)]
 pub struct ProjectFile {
     name: String,
-    content: HashMap<String, Value>,
+    content: ProjectContent,
 }
 
 #[tauri::command]
@@ -20,7 +25,7 @@ pub fn find_project_file(path: &str) -> Option<ProjectFile> {
     if let Some(file_name) = find_file_in_directory(&project_root, "package.json") {
         let file_path = project_root.join(&file_name);
         if let Ok(content) = read_json_file(&file_path) {
-            return Some(ProjectFile { name: file_name, content });
+            return Some(ProjectFile { name: file_name, content: ProjectContent::Json(content) });
         }
     }
 
@@ -28,7 +33,7 @@ pub fn find_project_file(path: &str) -> Option<ProjectFile> {
     if let Some(file_name) = find_file_in_directory(&project_root, "pom.xml") {
         let file_path = project_root.join(&file_name);
         if let Ok(content) = read_xml_file(&file_path) {
-            return Some(ProjectFile { name: file_name, content });
+            return Some(ProjectFile { name: file_name, content: ProjectContent::Xml(content) });
         }
     }
 
@@ -42,33 +47,25 @@ pub fn read_json_file(file_path: &Path) -> Result<HashMap<String, serde_json::Va
     Ok(json)
 }
 
-pub fn read_xml_file(file_path: &Path) -> Result<HashMap<String, Value>, Box<dyn std::error::Error>> {
+pub fn read_xml_file(file_path: &Path) -> Result<HashMap<String, Vec<String>>, Box<dyn std::error::Error>> {
     let file_content = fs::read_to_string(file_path)?;
     let parser = EventReader::from_str(&file_content);
     let mut content_map = HashMap::new();
     let mut current_key = String::new();
-    let mut current_value = String::new();
+    let mut current_values = Vec::new();
 
     for event in parser {
         match event {
             Ok(XmlEvent::StartElement { name, .. }) => {
                 current_key = name.local_name.clone();
+                current_values.clear(); // Limpiar los valores actuales para la nueva clave
             }
             Ok(XmlEvent::Characters(chars)) => {
-                current_value = chars;
+                current_values.push(chars);
             }
             Ok(XmlEvent::EndElement { .. }) => {
                 // Insertar los valores en la estructura de datos
-                content_map.entry(current_key.clone()).or_insert(Value::Null);
-                if let Some(entry) = content_map.get_mut(&current_key) {
-                    if let Value::String(existing_value) = entry {
-                        // Concatenar valores si ya existe una cadena
-                        *existing_value += &current_value;
-                    } else {
-                        // Establecer el valor si es la primera vez que se encuentra la clave
-                        *entry = Value::String(current_value.clone());
-                    }
-                }
+                content_map.entry(current_key.clone()).or_insert(Vec::new()).extend(current_values.clone());
             }
             Err(e) => return Err(Box::new(e)),
             _ => {}

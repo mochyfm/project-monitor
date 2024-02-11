@@ -5,28 +5,21 @@ import { Collection, Project } from '../../types/application.types'
 import { FaPlus } from 'react-icons/fa'
 import Constants from '../../constants/options.constants'
 import ProjectListCard from '../../components/ProjectComponents/ProjectListCard'
-import { invoke } from '@tauri-apps/api'
 import { useNavigate } from 'react-router-dom'
 import { Web } from '../../constants/app.constants'
+import { PageProps } from '../../types/interface.types'
 
-const ProjectsList = () => {
+const ProjectsList = (props: PageProps) => {
+    const { nodeVersion } = props
     const [projectsList, setProjectsList] = useState<Collection | null>(null)
-    const [nodeVersion, setNodeVersion] = useState<string>('')
 
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchData = async () => {
-            const [projects, version] = await Promise.all([
-                getProjects(),
-                invoke<string>('get_node_version').catch(err => {
-                    console.error(err)
-                    return ''
-                })
-            ])
-            console.log(projects);
+            const projects = await getProjects()
+            console.log(projects)
             setProjectsList(projects)
-            setNodeVersion(version)
         }
 
         fetchData()
@@ -39,17 +32,20 @@ const ProjectsList = () => {
                     projectsList.map((project: Project, index: number) => {
                         return (
                             <ProjectListCard
-                                node_version={nodeVersion}
+                                nodeVersion={nodeVersion}
                                 id={project.id}
                                 name={project.name}
                                 launcheables={project.launcheables}
-                                dockers={project.dockerList}
+                                dockerList={project.dockerList}
                                 key={index}
                             />
                         )
                     })}
             </div>
-            <button className='addProject' onClick={() => navigate(Web.newProject.path)}>
+            <button
+                className='addProject'
+                onClick={() => navigate(Web.newProject.path)}
+            >
                 <FaPlus size={Constants.iconsSize + 10} />
             </button>
         </div>

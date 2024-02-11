@@ -31,6 +31,7 @@ html {
 
     --button-bg-color: #c2c2c2;
     --button-color: #333;
+    --legend-color: #808080;
 
     --button-hover-bg-color: #1f1f1f;
     --button-hover-color: var(--font-color)
@@ -38,6 +39,31 @@ html {
     --font-size: 1.2rem;
 
     --font-family: 'Segoe UI', 'system-ui';
+}
+
+*::-webkit-scrollbar {
+    margin-right: 5px;
+    width: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: var(--font-color);
+    transition: background-color 0.5s ease-in-out;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background-color: var(--primary-color);
+}
+
+*::-webkit-scrollbar-track {
+    background-color: var(--secondary-color);
+}
+
+.legend {
+    color: var(--legend-color);
+    font-size: 10px;
+    font-style: italic;
 }
 
 html {
