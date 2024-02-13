@@ -17,13 +17,16 @@ export interface Project {
 export interface Launcheable {
     id?: string
     name?: string
+    architecture ?: ProjectTechnologies
     sdk?: CompatibleSDK
     sdkVersion?: string
     language?: ProgrammingLanguage
     preferedIde?: CompatibleIDEs
     path?: string
-    scripts ?: Record<string, string>,
-    launchFile ?: string;
+    scripts?: Record<string, string>
+    script?: string
+    dependencies?: Record<string, string>
+    launchFile?: string
 }
 
 export interface DockerElement {
@@ -45,6 +48,34 @@ export interface ProjectLauncheableProps extends Launcheable, PageProps {
     onDelete: (arg?: any) => any | void
     onEdit: (arg?: any) => any | void
 }
+
+export type Dependency = {
+    name: string
+    version: string
+}
+
+export type GroupedDependencies = {
+    [technology: string]: Dependency[]
+}
+
+export type ProjectTechnologies =
+    | 'react'
+    | 'preact'
+    | 'vue'
+    | 'svelte'
+    | 'express'
+    | 'next'
+    | 'nestjs'
+    | 'redux'
+    | 'angular'
+    | 'tailwind'
+    | 'bootstrap'
+    | 'jquery'
+    | 'lodash'
+    | 'mongodb'
+    | 'angular-core'
+    | 'astro'
+
 
 /**
  * DATA TYPES

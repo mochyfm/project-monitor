@@ -20,7 +20,7 @@ export type ProgrammingLanguage =
     | 'Perl'
     | 'Other';
 
-export type CompatibleIDEs = 'vscode' | 'intellij' | 'intellij_community' | 'eclipse' | 'sublime' | 'notepad_pp' | 'vs_ide'
+export type CompatibleIDEs = 'vscode' | 'intellij' | 'intellij_community' | 'eclipse' | 'sublime' | 'notepad_pp'
 export type CompatibleSDK = 'node' | 'springboot' | 'maven';
 
 export interface PageProps {

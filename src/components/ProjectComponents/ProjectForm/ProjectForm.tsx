@@ -100,8 +100,8 @@ const ProjectForm = (props: ProjectFormProps) => {
                                 Add Launcheable
                             </button>
                             <button
-                                className='projectFormClearButton'
                                 type='button'
+                                className='projectFormClearButton'
                                 onClick={clearForm}
                             >
                                 Clear Launcheables
@@ -114,6 +114,7 @@ const ProjectForm = (props: ProjectFormProps) => {
                 {projectData.launcheables.map((launcheable) => (
                     <ProjectLauncheable
                         key={launcheable.id}
+                        architecture={launcheable.architecture}
                         id={launcheable.id}
                         sdk={launcheable.sdk}
                         language={launcheable.language}
@@ -121,8 +122,10 @@ const ProjectForm = (props: ProjectFormProps) => {
                         preferedIde={launcheable.preferedIde}
                         sdkVersion={launcheable.sdkVersion}
                         name={launcheable.name}
+                        dependencies={launcheable.dependencies}
                         launchFile={launcheable.launchFile}
                         scripts={launcheable.scripts}
+                        script={launcheable.script}
                         onEdit={handleLauncheableChange}
                         onDelete={removeLauncheable}
                         nodeVersion={nodeVersion}

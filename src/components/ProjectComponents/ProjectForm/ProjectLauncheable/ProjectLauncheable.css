@@ -1,9 +1,12 @@
 .launcheableFormBody {
     border-radius: 10px;
     background-color: var(--secondary-color);
+    display: flex;
+    flex-direction: column;
     padding: 20px;
     position: relative;
-    height: 150px;
+    height: 450px;
+    justify-content: space-between;
 }
 
 .launcheableInputName {
@@ -19,7 +22,7 @@
     outline: none;
 }
 
-.projectFindPathOfProject {
+.projectFindPathOfProject, .projectFormOpenMainFileButton {
     border-radius: 5px;
     border: none;
     margin: 5px;
@@ -37,14 +40,14 @@
     right: 15px;
 }
 
-.projectFindPathOfProject {
+.projectFindPathOfProject, .projectFormOpenMainFileButton {
     border: 1px solid;
     font-size: 12px;
     transition: background-color 0.3s ease-in;
     transition: color 0.2s ease-in;
 }
 
-.projectFindPathOfProject:hover {
+.projectFindPathOfProject:hover, .projectFormOpenMainFileButton:hover {
     cursor: pointer;
     color: var(--font-color);
     transition: background-color 0.2s ease-out;
@@ -62,18 +65,59 @@
     transition: background-color 0.2s ease-in;
 }
 
+.launcheableProjectDependenciesAndScripts {
+    height: 50%;
+    margin-bottom: 20px;
+    padding: 10px;
+    overflow-y: hidden;
+}
+
+.launcheableProjectDependenciesAndScripts:hover {
+    overflow-y: scroll;
+}
+
+
+.launcheableScriptsList, .launcheableDependenciesList {
+    margin-top: 10px;
+}
+
 .launcheableFormRootLocation {
     align-items: center;
     display: flex;
     margin-bottom: 15px;
     justify-content: space-around;
     position: relative;
+} 
+
+.launcheableLaunchFileDisplay {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    margin-left: 15px;
+}
+
+.launcheableLaunchFileDisplay img {
+    margin-right: 10px;
+}
+
+.scriptElement {
+    margin: 15px 0px;
 }
 
 .launcheableSdkAndIde {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+.launcheableProgramLanguage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.launcheableProgramLanguage span {
+    margin-right: 10px;
 }
 
 .launcheableSdkAndVersion {

@@ -1,34 +1,3 @@
-// const renderLauncheablePathData = () => {
-//     console.log(launcheablePathData?.content)
-//     let sdk = null
-//     if (launcheablePathData?.content.Xml) {
-//         const version = findXmlVersion(launcheablePathData.content.Xml)
-//         sdk = (
-//             <>
-//                 <img
-//                     src='/assets/icons/sdk/springboot.png'
-//                     alt='Logo de Spring'
-//                     width={30}
-//                 />
-//                 {version !== 'Maven' ? `SpringBoot v${version}` : version}
-//             </>
-//         )
-//     } else if (launcheablePathData?.name.includes('package')) {
-//         sdk = (
-//             <>
-//                 <img
-//                     src='/assets/icons/sdk/node.png'
-//                     alt='Logo de Node.js'
-//                     width={30}
-//                 />
-//                 Node {nodeVersion}
-//             </>
-//         )
-//         console.log(`Lleva Node ${nodeVersion}`)
-//     }
-//     return sdk
-// }
-
 import { invoke } from '@tauri-apps/api'
 import {
     ProjectLauncheableProps,
@@ -38,7 +7,18 @@ import './ProjectLauncheable.css'
 import { open } from '@tauri-apps/api/dialog'
 import { findXmlVersion } from '../../../../utils/fetch.utils'
 import { CompatibleSDK } from '../../../../types/interface.types'
-import { renderPreferedIde, renderSdk } from '../../../../utils/project.utils'
+import {
+    detectProjectLanguage,
+    removeExtension,
+    renderLanguage,
+    renderPreferedIde,
+    renderSdk,
+    retrieveLaunchFile,
+} from '../../../../utils/project.utils'
+import {
+    detectArchitecture,
+    detectDependencies,
+} from '../../../../utils/launcheable.utils'
 
 const ProjectLauncheable = (props: ProjectLauncheableProps) => {
     const {
@@ -51,6 +31,7 @@ const ProjectLauncheable = (props: ProjectLauncheableProps) => {
         language,
         path,
         preferedIde,
+        dependencies,
         scripts,
         launchFile,
         nodeVersion,
@@ -79,35 +60,45 @@ const ProjectLauncheable = (props: ProjectLauncheableProps) => {
             })
             console.log(data)
             if (data?.content.Xml) {
-                const mainPath = await invoke('find_java_main', { rootDir: path })
+                const mainPath: string = await invoke('find_java_main', {
+                    rootDir: path,
+                })
                 const version = findXmlVersion(data.content.Xml)
                 const sdk: CompatibleSDK =
                     version !== 'Maven' ? 'springboot' : 'maven'
                 onEdit({
                     id,
                     name,
-                    sdk,
+                    sdk: sdk,
                     path,
+                    scripts: null,
                     launchFile: mainPath,
                     preferedIde: 'intellij',
                     sdkVersion: version !== 'Maven' ? version : null,
                     language: 'Java',
-
                 })
             } else if (data.name.includes('package')) {
-                const projectName = data.content.Json!.name
-                const capitalizedProjectName =
-                    projectName.charAt(0).toUpperCase() + projectName.slice(1)
                 const projectScripts = data.content.Json!.scripts
+                const architecture = detectArchitecture(
+                    data.content.Json!.dependencies,
+                )
+                const projectLanguage = detectProjectLanguage(
+                    data.content.Json!.dependencies,
+                    data.content.Json!.devDependencies,
+                )
+                console.log(architecture, projectLanguage)
                 onEdit({
                     id,
-                    name: capitalizedProjectName,
+                    name,
                     path,
+                    dependencies: data.content.Json!.dependencies,
                     preferedIde: 'vscode',
+                    architecture,
                     sdk: 'node',
+                    launchFile: null,
                     sdkVersion: nodeVersion,
-                    language: 'JavaScript',
-                    scripts: projectScripts
+                    language: projectLanguage,
+                    scripts: projectScripts,
                 })
             }
             return data
@@ -119,35 +110,77 @@ const ProjectLauncheable = (props: ProjectLauncheableProps) => {
 
     return (
         <div className='launcheableFormBody'>
-            <input
-                name='name'
-                className='launcheableInputName'
-                value={name}
-                onChange={handleChange}
-                placeholder={`MyLauncheableName`}
-            />
-            <div className='launcheableFormRootLocation'>
-                Select Folder:
-                <button
-                    className='projectFindPathOfProject'
-                    onClick={fetchProject}
-                >
-                    Find Path
-                </button>
-                <label className='legend'>
-                    *Here you select the root folder of the project
-                </label>
+            <div>
+                <input
+                    name='name'
+                    className='launcheableInputName'
+                    value={name}
+                    onChange={handleChange}
+                    placeholder={`MyLauncheableName`}
+                />
+                <div className='launcheableFormRootLocation'>
+                    Select Folder:
+                    <button
+                        className='projectFindPathOfProject'
+                        onClick={fetchProject}
+                        type='button'
+                    >
+                        Find Path
+                    </button>
+                    <label className='legend'>
+                        *Here you select the root folder of the project
+                    </label>
+                </div>
+                {onDelete && (
+                    <button
+                        className='projectFormDeleteLauncheableButton'
+                        type='button'
+                        onClick={() => onDelete(id)}
+                    >
+                        <img src='/assets/icons/ui/cross.svg' width={15} />
+                    </button>
+                )}
             </div>
-            {onDelete && (
-                <button
-                    className='projectFormDeleteLauncheableButton'
-                    type='button'
-                    onClick={() => onDelete(id)}
-                >
-                    <img src='/assets/icons/ui/cross.svg' width={15} />
-                </button>
+            {language && <div className='launcheableProgramLanguage'>
+                <span>{language}</span>
+                <img
+                    className='promLangIcon'
+                    src={`/assets/icons/prog/${language}.png`}
+                    alt={`${language} icon`}
+                />
+            </div>}
+            {(scripts || launchFile) && (
+                <div className='launcheableProjectDependenciesAndScripts'>
+                    {scripts && (
+                        <>
+                            <h2>Scripts:</h2>
+                            <div className='launcheableScriptsList'>
+                                {Object.entries(scripts).map(([key, value]) => (
+                                    <div className='scriptElement' key={key}>
+                                        <strong>{key} -</strong> {value}
+                                    </div>
+                                ))}
+                            </div>
+                        </>
+                    )}
+                    {launchFile && (
+                        <>
+                            <h2>Project main file:</h2>
+                            <div className='launcheableLaunchFileDisplay'>
+                                <img
+                                    src={`/assets/icons/prog/${renderLanguage(
+                                        launchFile,
+                                    )}.png`}
+                                    width={40}
+                                />
+                                {removeExtension(
+                                    retrieveLaunchFile(launchFile),
+                                )}
+                            </div>
+                        </>
+                    )}
+                </div>
             )}
-            {launchFile && <div>{launchFile}</div>}
             <div className='launcheableSdkAndIde'>
                 {sdk && (
                     <div className='launcheableSdkAndVersion'>

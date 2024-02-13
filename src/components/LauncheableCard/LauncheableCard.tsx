@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react'
 import Constants from '../../constants/options.constants'
 import './LauncheableCard.css'
 import { IoSettingsSharp, IoSettingsOutline } from 'react-icons/io5'
-import { renderPreferedIde, renderSdk } from '../../utils/project.utils'
-import { Launcheable } from '../../types/application.types'
-import { Command } from '@tauri-apps/api/shell'
-import { sendNotification } from '@tauri-apps/api/notification'
+import {
+    openIde,
+    renderPreferedIde,
+    renderSdk,
+} from '../../utils/project.utils'
 import { findProjectFile } from '../../utils/fetch.utils'
 import { LauncheableCardProps } from '../../types/interface.types'
 
@@ -20,64 +21,14 @@ const LauncheableCard = ({
     const [isSettingsIconVisible, setSettingsIconVisibility] =
         useState<boolean>(false)
 
-    const [ideToLaunch, setIdeToLaunch] = useState<string | undefined>(
-        preferedIde,
-    )
-
-    function tieneEspacios(path: string) {
-        const partes = path.split('\\')
-        for (let parte of partes) {
-            if (parte.includes(' ')) {
-                return true
-            }
-        }
-        return false
-    }
-
-    const openIde = () => {
-        if (path && !tieneEspacios(path)) {
-            console.log(`Launching IDE: ${ideToLaunch}`)
-            const ideLaunchCommand = new Command(
-                'cmd',
-                ['/c', `start /B /MIN ${ideToLaunch} .`],
-                { cwd: path },
-            )
-            try {
-                ideLaunchCommand.execute()
-                sendNotification({
-                    title: `Launching ${
-                        preferedIde ? renderPreferedIde(preferedIde) : `...`
-                    }`,
-                    icon: `../../src/assets/icons/sdk/${sdk}.png`,
-                    body: 'Opening in a new tab',
-                })
-            } catch (error) {
-                console.error(error)
-            }   
-        }
-    }
-
     useEffect(() => {
-        switch (preferedIde) {
-            case 'intellij_community':
-            case 'intellij':
-                setIdeToLaunch('idea')
-            break;
-            case 'vscode':
-                setIdeToLaunch('code')
-            break;
-            default:
-                setIdeToLaunch('code')
-        }
- 
         const projectStructure = async () => {
-            path && findProjectFile(path).then((projectData) => {
-                console.log(projectData);
-            })
-            
+            path &&
+                findProjectFile(path).then((projectData) => {
+                    console.log(projectData)
+                })
         }
-        projectStructure();
-
+        projectStructure()
     }, [])
 
     return (
@@ -86,7 +37,11 @@ const LauncheableCard = ({
                 <h3 className='launcheableName'>{name}</h3>
                 <div className='launcheableSdk'>
                     <span>{`${renderSdk(sdk)} ${
-                        sdk === 'node' ? (nodeVersion !== undefined ? nodeVersion : 'Not Installed') : ''
+                        sdk === 'node'
+                            ? nodeVersion !== undefined
+                                ? nodeVersion
+                                : 'Not Installed'
+                            : ''
                     }`}</span>
                     <img
                         className='sdkIcon'
@@ -117,7 +72,9 @@ const LauncheableCard = ({
                 {(preferedIde === 'vscode' ||
                     preferedIde === 'intellij' ||
                     preferedIde === 'intellij_community') && (
-                    <button onClick={openIde}>Open with</button>
+                    <button onClick={() => openIde(path, preferedIde, sdk)}>
+                        Open with
+                    </button>
                 )}
             </div>
             <div className='launcheablePath'>{`${path}`}</div>

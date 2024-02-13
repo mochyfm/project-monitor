@@ -1,6 +1,6 @@
 .projectLauncheablesBlock {
     border-radius: 10px;
-    height: calc(var(--insidepage-height) - 5vh);
+    /* min-height: calc(var(--insidepage-height) - 5vh); */
     padding: 30px;
     margin: 20px;
     background-color: var(--primary-color);
