@@ -1,3 +1,4 @@
+import Constants from "../constants/options.constants"
 import { ProjectTechnologies } from "../types/application.types"
 
 export const groupDependenciesByTechnology = (
@@ -54,7 +55,7 @@ export const groupDependenciesByTechnology = (
 export const detectArchitecture = (dependencies: Record<string, string>): ProjectTechnologies | null => {
     // Definimos los frameworks principales de frontend y backend
     const frontendFrameworks = ['astro', 'react', 'preact', 'vue', 'svelte', 'next', 'angular'];
-    const backendFrameworks = ['express', 'nestjs', 'fastify'];
+    const backendFrameworks = ['express', 'nestjs', 'fastify', 'hibernate', 'jpa', 'liquibase'];
 
     // Buscamos el framework principal
     let technology: string | null = null;
@@ -87,20 +88,7 @@ export const detectArchitecture = (dependencies: Record<string, string>): Projec
 }
 
 export const detectDependencies = (dependencies: Record<string, string>): string[] | null => {
-    // Definimos las librerías más populares
-    const popularLibraries: string[] = [
-        'typescript', 
-        'tailwind', 
-        'axios', 
-        'jquery', 
-        'lodash', 
-        'bootstrap', 
-        'react-router-dom', 
-        'vue-router', 
-        'react-redux', 
-        '@angular/core',
-        // Puedes agregar más bibliotecas populares aquí...
-    ];
+    const popularLibraries: string[] = Constants.popularDependencies
 
     // Buscamos las librerías populares en las dependencias
     const foundLibraries: string[] = [];
@@ -117,10 +105,46 @@ export const detectDependencies = (dependencies: Record<string, string>): string
     return foundLibraries.length > 0 ? foundLibraries : null;
 }
 
+export const detectMavenTechnologies = (artifactIds: string[]): { structure: string[]; database: string[] } => {
+    const structure: string[] = [];
+    const database: string[] = [];
 
+    artifactIds.forEach(artifactId => {
+        if (artifactId.includes('spring-security')) {
+            structure.push('Spring Security');
+        }
+        if (artifactId.includes('spring-web')) {
+            structure.push('Spring Web');
+        }
+        if (artifactId.includes('spring-cloud')) {
+            structure.push('Spring Cloud');
+        }
+        if (artifactId.includes('jpa')) {
+            structure.push('Jpa');
+        }
+        if (artifactId.includes('spring-boot-starter-data-rest')) {
+            structure.push('ApiRest');
+        }
+        if (artifactId.includes('liquibase')) {
+            structure.push('Liquibase');
+        }
+        if (artifactId.includes('postgresql')) {
+            database.push('PostgreSQL');
+        }
+        if (artifactId.includes('mysql')) {
+            database.push('MySQL');
+        }
+        if (artifactId.includes('mongodb')) {
+            database.push('MongoDB');
+        }
+    });
 
+    // Elimina duplicados
+    const uniqueArchitecture = [...new Set(structure)];
+    const uniqueDatabase = [...new Set(database)];
 
-
+    return { structure: uniqueArchitecture, database: uniqueDatabase };
+};
 
 
 

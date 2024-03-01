@@ -73,7 +73,7 @@
 }
 
 .launcheableProjectDependenciesAndScripts:hover {
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 
@@ -110,14 +110,36 @@
     justify-content: space-between;
 }
 
-.launcheableProgramLanguage {
+.launcheableStructureDisplay {
+    display: flex;
+    margin-top: 25px;
+    justify-content: space-around;
+}
+
+.launcheableStructure span {
+    margin-right: 15px;
+}
+
+.launcheableProgramLanguageAndArchitecture {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.launcheableProgramLanguage span {
-    margin-right: 10px;
+.launcheableProgramLanguageAndArchitecture span {
+    margin-left: 15px;
+}
+
+.launcheableArchitecture {
+    display: flex;
+    align-content: center;
+    align-items: center;
+}
+
+.launcheableProgramLanguage {
+    display: flex;
+    align-items: center;
+    margin-right: 30px;
 }
 
 .launcheableSdkAndVersion {

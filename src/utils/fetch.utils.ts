@@ -1,7 +1,7 @@
 import { invoke } from '@tauri-apps/api'
 import { BaseDirectory, readTextFile } from '@tauri-apps/api/fs'
 import Constants from '../constants/options.constants'
-import { JsonContent, XmlContent } from '../types/application.types'
+import { XmlContent } from '../types/application.types'
 
 export const findProjectFile = async (path: string) => {
   return await invoke('find_project_file', { path })

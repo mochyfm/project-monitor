@@ -1,5 +1,5 @@
 import { IconType } from 'react-icons'
-import { DockerElement, Launcheable, Project } from './application.types'
+import { Launcheable, Project } from './application.types'
 
 export type ProgrammingLanguage =
     | 'JavaScript'

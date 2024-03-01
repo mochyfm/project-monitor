@@ -17,7 +17,7 @@ import {
 } from '../../../../utils/project.utils'
 import {
     detectArchitecture,
-    detectDependencies,
+    detectMavenTechnologies,
 } from '../../../../utils/launcheable.utils'
 
 const ProjectLauncheable = (props: ProjectLauncheableProps) => {
@@ -31,7 +31,8 @@ const ProjectLauncheable = (props: ProjectLauncheableProps) => {
         language,
         path,
         preferedIde,
-        dependencies,
+        architecture,
+        structure,
         scripts,
         launchFile,
         nodeVersion,
@@ -45,6 +46,7 @@ const ProjectLauncheable = (props: ProjectLauncheableProps) => {
                 name,
                 sdk,
                 sdkVersion,
+                architecture,
                 language,
                 path,
                 preferedIde,
@@ -60,6 +62,10 @@ const ProjectLauncheable = (props: ProjectLauncheableProps) => {
             })
             console.log(data)
             if (data?.content.Xml) {
+                const { structure, database } = detectMavenTechnologies(
+                    data?.content.Xml.artifactId,
+                )
+                console.log(structure, database)
                 const mainPath: string = await invoke('find_java_main', {
                     rootDir: path,
                 })
@@ -69,9 +75,12 @@ const ProjectLauncheable = (props: ProjectLauncheableProps) => {
                 onEdit({
                     id,
                     name,
-                    sdk: sdk,
+                    architecture: null,
+                    structure: structure,
                     path,
+                    sdk: sdk,
                     scripts: null,
+                    dependencies: data?.content.Xml.artifactId,
                     launchFile: mainPath,
                     preferedIde: 'intellij',
                     sdkVersion: version !== 'Maven' ? version : null,
@@ -86,19 +95,19 @@ const ProjectLauncheable = (props: ProjectLauncheableProps) => {
                     data.content.Json!.dependencies,
                     data.content.Json!.devDependencies,
                 )
-                console.log(architecture, projectLanguage)
                 onEdit({
                     id,
                     name,
-                    path,
-                    dependencies: data.content.Json!.dependencies,
-                    preferedIde: 'vscode',
                     architecture,
+                    structure: null,
+                    path,
                     sdk: 'node',
+                    scripts: projectScripts,
+                    dependencies: data.content.Json!.dependencies,
                     launchFile: null,
+                    preferedIde: 'vscode',
                     sdkVersion: nodeVersion,
                     language: projectLanguage,
-                    scripts: projectScripts,
                 })
             }
             return data
@@ -141,14 +150,35 @@ const ProjectLauncheable = (props: ProjectLauncheableProps) => {
                     </button>
                 )}
             </div>
-            {language && <div className='launcheableProgramLanguage'>
-                <span>{language}</span>
-                <img
-                    className='promLangIcon'
-                    src={`/assets/icons/prog/${language}.png`}
-                    alt={`${language} icon`}
-                />
-            </div>}
+            {language && (
+                <div className='launcheableProgramLanguageAndArchitecture'>
+                    <div className='launcheableProgramLanguage'>
+                        <img
+                            className='promLangIcon'
+                            src={`/assets/icons/prog/${language}.png`}
+                            alt={`${language} icon`}
+                        />
+                        <span>{language}</span>
+                    </div>
+                    {architecture && (
+                        <div className='launcheableArchitecture'>
+                            <img
+                                className='promLangIcon'
+                                src={`/assets/icons/arch/${
+                                    architecture.charAt(0).toUpperCase() +
+                                    architecture.slice(1)
+                                }.png`}
+                                alt={`${language} icon`}
+                                width={30}
+                            />
+                            <span>
+                                {architecture.charAt(0).toUpperCase() +
+                                    architecture.slice(1)}
+                            </span>
+                        </div>
+                    )}
+                </div>
+            )}
             {(scripts || launchFile) && (
                 <div className='launcheableProjectDependenciesAndScripts'>
                     {scripts && (
@@ -177,6 +207,22 @@ const ProjectLauncheable = (props: ProjectLauncheableProps) => {
                                     retrieveLaunchFile(launchFile),
                                 )}
                             </div>
+                            {structure && (
+                                <div className='launcheableStructureDisplay'>
+                                    {structure.map((value, index) => (
+                                        <div
+                                            key={index}
+                                            className='launcheableStructure'
+                                        >
+                                            <span>{value}</span>
+                                            <img
+                                                src={`/assets/icons/structure/${value}.png`}
+                                                width={30}
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </>
                     )}
                 </div>

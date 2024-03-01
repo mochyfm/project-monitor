@@ -16,6 +16,7 @@
     background-color: transparent;
     font-size: 32px;
     color: var(--font-color);
+    width: 100%;
 }
 
 .projectInfoInput:focus {

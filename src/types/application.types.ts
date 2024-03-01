@@ -17,7 +17,8 @@ export interface Project {
 export interface Launcheable {
     id?: string
     name?: string
-    architecture ?: ProjectTechnologies
+    architecture ?: ProjectTechnologies,
+    structure ?: string[],
     sdk?: CompatibleSDK
     sdkVersion?: string
     language?: ProgrammingLanguage
@@ -94,6 +95,7 @@ export interface ProjectPackageData {
 
 // TypeScript types for the XML content
 export interface XmlContent {
+    id: string[]
     artifactId: string[]
     version: string[]
     [key: string]: string | string[]

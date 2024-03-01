@@ -124,6 +124,7 @@ const ProjectForm = (props: ProjectFormProps) => {
                         name={launcheable.name}
                         dependencies={launcheable.dependencies}
                         launchFile={launcheable.launchFile}
+                        structure={launcheable.structure}
                         scripts={launcheable.scripts}
                         script={launcheable.script}
                         onEdit={handleLauncheableChange}
