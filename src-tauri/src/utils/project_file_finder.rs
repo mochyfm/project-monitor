@@ -37,6 +37,13 @@ pub fn find_project_file(path: &str) -> Option<ProjectFile> {
         }
     }
 
+    if let Some(file_name) = find_file_in_directory(&project_root, "prowatcher_settings.json") {
+        let file_path = project_root.join(&file_name);
+        if let Ok(content) = read_json_file(&file_path) {
+            return Some(ProjectFile { name: file_name, content: ProjectContent::Json(content) });
+        }
+    }
+
     None
 }
 

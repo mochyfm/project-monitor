@@ -21,7 +21,7 @@ export type ProgrammingLanguage =
     | 'Other';
 
 export type CompatibleIDEs = 'vscode' | 'intellij' | 'intellij_community' | 'eclipse' | 'sublime' | 'notepad_pp'
-export type CompatibleSDK = 'node' | 'springboot' | 'maven';
+export type CompatibleSDK = 'node' | 'springboot' | 'maven' | 'unknown';
 
 export interface PageProps {
     nodeVersion ?: string;

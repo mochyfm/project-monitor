@@ -19,7 +19,7 @@ export interface Launcheable {
     name?: string
     architecture?: ProjectTechnologies
     structure?: string[]
-    sdk?: CompatibleSDK
+    sdk?: CompatibleSDK,
     sdkVersion?: string
     language?: ProgrammingLanguage
     preferedIde?: CompatibleIDEs
@@ -31,7 +31,7 @@ export interface Launcheable {
 }
 
 export interface FormLauncheable extends Launcheable {
-    edited: boolean;
+    edited: boolean
 }
 
 export interface DockerElement {
@@ -87,9 +87,8 @@ export type ProjectTechnologies =
 
 // TypeScript types for the project content, which can be either XmlContent or JsonContent
 interface ProjectContent {
-    Xml?: XmlContent,
+    Xml?: XmlContent
     Json?: JsonContent
-    
 }
 
 export interface ProjectPackageData {
@@ -112,6 +111,7 @@ export interface JsonContent {
     dependencies: Record<string, string>
     devDependencies: Record<string, string>
     name: string
+    main?: string
     private: boolean
     scripts: Record<string, string>
     version: string

@@ -9,6 +9,8 @@ import { findXmlVersion } from '../../../../utils/fetch.utils'
 import { CompatibleSDK } from '../../../../types/interface.types'
 import {
     detectProjectLanguage,
+    getFileExtension,
+    getFileLanguage,
     removeExtension,
     renderLanguage,
     renderPreferedIde,
@@ -58,23 +60,30 @@ const ProjectLauncheable = (props: ProjectLauncheableProps) => {
 
     const fetchProject = async () => {
         try {
-            const path = await open({ directory: true });
-            if (path === null) return;
-    
-            const data: ProjectPackageData = await invoke('find_project_file', { path });
-    
-            console.log(data);
-    
+            const path = await open({ directory: true })
+            if (path === null) return
+
+            const data: ProjectPackageData = await invoke('find_project_file', {
+                path,
+            })
+
+            console.log(data)
+
             if (data?.content.Xml) {
-                const { structure, database } = detectMavenTechnologies(data?.content.Xml.artifactId);
-                console.log(structure, database);
-    
-                const mainPath: string = await invoke('find_java_main', { rootDir: path });
-                const version = findXmlVersion(data.content.Xml);
-    
-                const sdk: CompatibleSDK = version !== 'Maven' ? 'springboot' : 'maven';
-                const projectName = data?.content.Xml.name[0] || name;
-    
+                const { structure, database } = detectMavenTechnologies(
+                    data?.content.Xml.artifactId,
+                )
+                console.log(structure, database)
+
+                const mainPath: string = await invoke('find_java_main', {
+                    rootDir: path,
+                })
+                const version = findXmlVersion(data.content.Xml)
+
+                const sdk: CompatibleSDK =
+                    version !== 'Maven' ? 'springboot' : 'maven'
+                const projectName = data?.content.Xml.name[0] || name
+
                 onEdit({
                     id,
                     name: projectName,
@@ -88,15 +97,23 @@ const ProjectLauncheable = (props: ProjectLauncheableProps) => {
                     preferedIde: 'intellij',
                     sdkVersion: version !== 'Maven' ? version : null,
                     language: 'Java',
-                    edited: true
-                });
+                    edited: true,
+                })
             } else if (data?.name.includes('package')) {
-                const projectScripts = data.content.Json?.scripts;
-                const architecture = detectArchitecture(data.content.Json!.dependencies);
-                const projectLanguage = detectProjectLanguage(data.content.Json!.dependencies, data.content.Json!.devDependencies);
-                const dependencies = filterDependecies(data.content.Json!.dependencies, data.content.Json!.devDependencies);
-                const projectName = data.content.Json?.name || name;
-    
+                const projectScripts = data.content.Json?.scripts
+                const architecture = detectArchitecture(
+                    data.content.Json!.dependencies,
+                )
+                const projectLanguage = detectProjectLanguage(
+                    data.content.Json!.dependencies,
+                    data.content.Json!.devDependencies,
+                )
+                const dependencies = filterDependecies(
+                    data.content.Json!.dependencies,
+                    data.content.Json!.devDependencies,
+                )
+                const projectName = data.content.Json?.name || name
+
                 onEdit({
                     id,
                     name: projectName,
@@ -110,27 +127,39 @@ const ProjectLauncheable = (props: ProjectLauncheableProps) => {
                     preferedIde: 'vscode',
                     sdkVersion: nodeVersion,
                     language: projectLanguage,
-                    edited: true
-                });
-            } else if (data?.name === 'proj_monitoring.json') {
-                console.log('Se encontró un archivo proj_monitoring.json');
+                    edited: true,
+                })
+            } else if (data?.name.includes('prowatcher_settings')) {
+                onEdit({
+                    id,
+                    architecture,
+                    structure: null,
+                    dependencies: null,
+                    path,
+                    sdk: getFileLanguage(data.content.Json?.main),
+                    scripts: null,
+                    preferedIde: 'vscode',
+                    sdkVersion: null,
+                    language: getFileLanguage(data.content.Json?.main),
+                    name,
+                    launchFile: data.content.Json!.main,
+                })
             }
-    
-            return data;
+
+            return data
         } catch (error) {
-            toast.dismiss();
+            toast.dismiss()
             toast.error('Debes seleccionar la carpeta raíz del proyecto', {
                 position: 'top-center',
                 autoClose: 5000,
                 theme: 'dark',
                 transition: Bounce,
-            });
-    
-            console.error('Error fetching project:', error);
-            return null;
+            })
+
+            console.error('Error fetching project:', error)
+            return null
         }
-    };
-    
+    }
 
     const filterDependecies = (
         list1: Record<string, string>,
@@ -161,7 +190,9 @@ const ProjectLauncheable = (props: ProjectLauncheableProps) => {
                     autoCapitalize='on'
                 />
                 <div className='launcheableFormRootLocation'>
-                    <span>{`${path !== null ? 'Change' : 'Select'} folder`}</span>
+                    <span>{`${
+                        path !== null ? 'Change' : 'Select'
+                    } folder`}</span>
                     <button
                         className='projectFindPathOfProject'
                         onClick={fetchProject}
@@ -263,8 +294,18 @@ const ProjectLauncheable = (props: ProjectLauncheableProps) => {
             <div className='launcheableSdkAndIde'>
                 {sdk && (
                     <div className='launcheableSdkAndVersion'>
-                        <img src={`/assets/icons/sdk/${sdk}.png`} width={25} />
-                        {renderSdk(sdk)} {sdkVersion}
+                        <img
+                            src={
+                                renderSdk(sdk) === 'unknown'
+                                    ? `/assets/icons/prog/${language}.png`
+                                    : `/assets/icons/sdk/${sdk}.png`
+                            }
+                            width={25}
+                        />
+                        {renderSdk(sdk) === 'unknown'
+                            ? language
+                            : renderSdk(sdk)}{' '}
+                        {sdkVersion}
                     </div>
                 )}
                 {preferedIde && (

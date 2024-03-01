@@ -76,7 +76,7 @@ export const openIde = (path?: string, ide?: CompatibleIDEs, sdk?: string) => {
     }
 }
 
-export const renderSdk = (sdk?: CompatibleSDK) => {
+export const renderSdk = (sdk?: CompatibleSDK | ProgrammingLanguage) => {
     switch (sdk) {
         case 'node':
             return 'Node'
@@ -89,12 +89,12 @@ export const renderSdk = (sdk?: CompatibleSDK) => {
     }
 }
 
-export const renderLanguage = (fileName: string): ProgrammingLanguage => {
-    const lastDotIndex = fileName.lastIndexOf('.')
+export const renderLanguage = (fileName?: string): ProgrammingLanguage => {
+    const lastDotIndex = fileName!.lastIndexOf('.')
     if (lastDotIndex === -1) {
         return 'Other'
     }
-    const extension = fileName.substring(lastDotIndex + 1).toLowerCase()
+    const extension = fileName!.substring(lastDotIndex + 1).toLowerCase()
 
     switch (extension) {
         case 'js':
@@ -168,4 +168,38 @@ export const detectProjectLanguage = (dependencies: Record<string, string>, devD
     }
 
     return 'JavaScript';
+}
+
+export const getFileLanguage = (filename?: string): ProgrammingLanguage | undefined => {
+    const extensionsToLanguages: { [key: string]: ProgrammingLanguage } = {
+        'py': 'Python',
+        'js': 'JavaScript',
+        'java': 'Java',
+        'ts': 'TypeScript',
+        'c': 'C',
+        'cpp': 'Cpp',
+        'php': 'PHP',
+        'rb': 'Ruby',
+        'rs': 'Rust',
+        'go': 'Go',
+        'swift': 'Swift',
+        'kt': 'Kotlin',
+        'pl': 'Perl',
+        // Agrega más extensiones y lenguajes aquí según sea necesario
+    };
+
+    const extension = filename && getFileExtension(filename);
+    if (extension && extensionsToLanguages.hasOwnProperty(extension)) {
+        return extensionsToLanguages[extension];
+    } else {
+        return undefined;
+    }
+}
+
+export const getFileExtension = (filename?: string): string | undefined => {
+    const lastDotIndex = filename!.lastIndexOf('.');
+    if (lastDotIndex === -1 || lastDotIndex === 0 || lastDotIndex === filename!.length - 1) {
+        return undefined; // No hay extensión
+    }
+    return filename!.slice(lastDotIndex + 1);
 }
