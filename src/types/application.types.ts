@@ -17,8 +17,8 @@ export interface Project {
 export interface Launcheable {
     id?: string
     name?: string
-    architecture ?: ProjectTechnologies,
-    structure ?: string[],
+    architecture?: ProjectTechnologies
+    structure?: string[]
     sdk?: CompatibleSDK
     sdkVersion?: string
     language?: ProgrammingLanguage
@@ -28,6 +28,10 @@ export interface Launcheable {
     script?: string
     dependencies?: Record<string, string>
     launchFile?: string
+}
+
+export interface FormLauncheable extends Launcheable {
+    edited: boolean;
 }
 
 export interface DockerElement {
@@ -77,15 +81,15 @@ export type ProjectTechnologies =
     | 'angular-core'
     | 'astro'
 
-
 /**
  * DATA TYPES
  */
 
 // TypeScript types for the project content, which can be either XmlContent or JsonContent
 interface ProjectContent {
-    Xml?: XmlContent
+    Xml?: XmlContent,
     Json?: JsonContent
+    
 }
 
 export interface ProjectPackageData {
@@ -96,6 +100,7 @@ export interface ProjectPackageData {
 // TypeScript types for the XML content
 export interface XmlContent {
     id: string[]
+    name: string | string[]
     artifactId: string[]
     version: string[]
     [key: string]: string | string[]

@@ -116,6 +116,11 @@
     justify-content: space-around;
 }
 
+.launcheableStructure {
+    display: flex;
+    align-items: center;
+}
+
 .launcheableStructure span {
     margin-right: 15px;
 }

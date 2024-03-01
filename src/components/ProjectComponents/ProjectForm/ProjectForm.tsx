@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import {
+    FormLauncheable,
     Launcheable,
     Project,
     ProjectFormProps,
@@ -8,6 +9,7 @@ import './ProjectForm.css'
 import ProjectLauncheable from './ProjectLauncheable'
 import { v4 as uuid4 } from 'uuid'
 import Constants from '../../../constants/options.constants'
+import { Bounce, toast } from 'react-toastify'
 
 const ProjectForm = (props: ProjectFormProps) => {
     const { mode, nodeVersion } = props
@@ -15,7 +17,7 @@ const ProjectForm = (props: ProjectFormProps) => {
     const defaultProject = {
         id: uuid4(),
         name: '',
-        launcheables: [] as Launcheable[],
+        launcheables: [] as FormLauncheable[],
     }
 
     const [projectData, setProjectData] = useState<Project>(defaultProject)
@@ -35,7 +37,7 @@ const ProjectForm = (props: ProjectFormProps) => {
 
     const addLauncheable = () => {
         if (projectData.launcheables.length < Constants.maxLauncheables) {
-            const newLauncheable: Launcheable = { id: uuid4(), name: '' }
+            const newLauncheable: FormLauncheable = { id: uuid4(), name: '', edited: false }
             setProjectData((prevData) => ({
                 ...prevData,
                 launcheables: [...prevData.launcheables, newLauncheable],
@@ -65,7 +67,27 @@ const ProjectForm = (props: ProjectFormProps) => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         if (projectData.launcheables.length >= 1 && projectData.name !== '') {
-            console.log(projectData)
+            const hasLauncheablesWithContent = projectData.launcheables.every(
+                (launcheable: any) => launcheable.edited,
+            )
+            if (hasLauncheablesWithContent) {
+                toast.success('Project Saved!', {
+                    position: 'top-center',
+                    autoClose: 5000,
+                    theme: 'dark',
+                    transition: Bounce,
+                })
+            } else {
+                toast.error(
+                    'You have a launcheable without content, remove it or add minimum a name on it ',
+                    {
+                        position: 'top-center',
+                        autoClose: 5000,
+                        theme: 'dark',
+                        transition: Bounce,
+                    },
+                )
+            }
         } else {
             console.error('Debe tener el nombre y 1 o más launcheables')
             console.log(projectData)
@@ -81,6 +103,7 @@ const ProjectForm = (props: ProjectFormProps) => {
                     className='projectInfoInput'
                     placeholder='YourProject_01'
                     onChange={handleInput}
+                    autoComplete='off'
                 />
             </div>
             {mode === 'create' && (

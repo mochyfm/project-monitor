@@ -19,6 +19,7 @@ import {
     detectArchitecture,
     detectMavenTechnologies,
 } from '../../../../utils/launcheable.utils'
+import { Bounce, toast } from 'react-toastify'
 
 const ProjectLauncheable = (props: ProjectLauncheableProps) => {
     const {
@@ -51,70 +52,100 @@ const ProjectLauncheable = (props: ProjectLauncheableProps) => {
                 path,
                 preferedIde,
                 [target.name]: target.value,
+                edited: true,
             })
     }
 
     const fetchProject = async () => {
         try {
-            const path = await open({ directory: true })
-            const data: ProjectPackageData = await invoke('find_project_file', {
-                path,
-            })
-            console.log(data)
+            const path = await open({ directory: true });
+            if (path === null) return;
+    
+            const data: ProjectPackageData = await invoke('find_project_file', { path });
+    
+            console.log(data);
+    
             if (data?.content.Xml) {
-                const { structure, database } = detectMavenTechnologies(
-                    data?.content.Xml.artifactId,
-                )
-                console.log(structure, database)
-                const mainPath: string = await invoke('find_java_main', {
-                    rootDir: path,
-                })
-                const version = findXmlVersion(data.content.Xml)
-                const sdk: CompatibleSDK =
-                    version !== 'Maven' ? 'springboot' : 'maven'
+                const { structure, database } = detectMavenTechnologies(data?.content.Xml.artifactId);
+                console.log(structure, database);
+    
+                const mainPath: string = await invoke('find_java_main', { rootDir: path });
+                const version = findXmlVersion(data.content.Xml);
+    
+                const sdk: CompatibleSDK = version !== 'Maven' ? 'springboot' : 'maven';
+                const projectName = data?.content.Xml.name[0] || name;
+    
                 onEdit({
                     id,
-                    name,
+                    name: projectName,
                     architecture: null,
-                    structure: structure,
+                    structure,
                     path,
-                    sdk: sdk,
+                    sdk,
                     scripts: null,
                     dependencies: data?.content.Xml.artifactId,
                     launchFile: mainPath,
                     preferedIde: 'intellij',
                     sdkVersion: version !== 'Maven' ? version : null,
                     language: 'Java',
-                })
-            } else if (data.name.includes('package')) {
-                const projectScripts = data.content.Json!.scripts
-                const architecture = detectArchitecture(
-                    data.content.Json!.dependencies,
-                )
-                const projectLanguage = detectProjectLanguage(
-                    data.content.Json!.dependencies,
-                    data.content.Json!.devDependencies,
-                )
+                    edited: true
+                });
+            } else if (data?.name.includes('package')) {
+                const projectScripts = data.content.Json?.scripts;
+                const architecture = detectArchitecture(data.content.Json!.dependencies);
+                const projectLanguage = detectProjectLanguage(data.content.Json!.dependencies, data.content.Json!.devDependencies);
+                const dependencies = filterDependecies(data.content.Json!.dependencies, data.content.Json!.devDependencies);
+                const projectName = data.content.Json?.name || name;
+    
                 onEdit({
                     id,
-                    name,
+                    name: projectName,
                     architecture,
-                    structure: null,
+                    structure: architecture,
+                    dependencies: [{ ...dependencies }],
                     path,
                     sdk: 'node',
                     scripts: projectScripts,
-                    dependencies: data.content.Json!.dependencies,
                     launchFile: null,
                     preferedIde: 'vscode',
                     sdkVersion: nodeVersion,
                     language: projectLanguage,
-                })
+                    edited: true
+                });
+            } else if (data?.name === 'proj_monitoring.json') {
+                console.log('Se encontró un archivo proj_monitoring.json');
             }
-            return data
+    
+            return data;
         } catch (error) {
-            console.error('Error fetching project:', error)
-            return null
+            toast.dismiss();
+            toast.error('Debes seleccionar la carpeta raíz del proyecto', {
+                position: 'top-center',
+                autoClose: 5000,
+                theme: 'dark',
+                transition: Bounce,
+            });
+    
+            console.error('Error fetching project:', error);
+            return null;
         }
+    };
+    
+
+    const filterDependecies = (
+        list1: Record<string, string>,
+        list2: Record<string, string>,
+    ): Record<string, string> => {
+        const combinedDependencies = { ...list1, ...list2 }
+        const uniqueDependencies: Record<string, string> = {}
+
+        for (const [key, value] of Object.entries(combinedDependencies)) {
+            if (!uniqueDependencies[value]) {
+                uniqueDependencies[key] = value
+            }
+        }
+
+        return uniqueDependencies
     }
 
     return (
@@ -126,9 +157,11 @@ const ProjectLauncheable = (props: ProjectLauncheableProps) => {
                     value={name}
                     onChange={handleChange}
                     placeholder={`MyLauncheableName`}
+                    autoComplete='off'
+                    autoCapitalize='on'
                 />
                 <div className='launcheableFormRootLocation'>
-                    Select Folder:
+                    <span>{`${path !== null ? 'Change' : 'Select'} folder`}</span>
                     <button
                         className='projectFindPathOfProject'
                         onClick={fetchProject}

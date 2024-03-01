@@ -9,6 +9,8 @@ import Monitoring from '../Monitoring'
 import Project from '../Project'
 import ProjectsList from '../ProjectsList'
 import NewProject from '../NewProject'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 function AppBrowser() {
     const [nodeVersion, setNodeVersion] = useState<string>()
@@ -29,6 +31,15 @@ function AppBrowser() {
 
     return (
         <BrowserRouter basename='/'>
+            <ToastContainer
+                toastStyle={{ backgroundColor: 'var(--secondary-color)' }}
+                draggable
+                limit={1}
+                closeOnClick
+                hideProgressBar
+                newestOnTop
+                closeButton={false}
+            />
             <Routes>
                 <Route element={<AppLayout />}>
                     <Route path={Web.dashboard.path} element={<Dashboard />} />
@@ -38,7 +49,7 @@ function AppBrowser() {
                     />
                     <Route
                         path={Web.newProject.path}
-                        element={<NewProject nodeVersion={nodeVersion}/>}
+                        element={<NewProject nodeVersion={nodeVersion} />}
                     />
                     <Route path={Web.project.path} element={<Project />} />
                     <Route path={Web.dockers.path} element={<Dockers />} />
