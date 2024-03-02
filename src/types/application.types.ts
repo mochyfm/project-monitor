@@ -27,11 +27,10 @@ export interface Launcheable {
     scripts?: Record<string, string>
     script?: string
     dependencies?: Record<string, string>
-    launchFile?: string
-}
-
-export interface FormLauncheable extends Launcheable {
-    edited: boolean
+    launchFile?: string,
+    mainPath?: string,
+    edited: boolean,
+    proWatcher: boolean,
 }
 
 export interface DockerElement {
@@ -46,7 +45,7 @@ export interface DockerElement {
  */
 
 export interface ProjectFormProps extends PageProps {
-    mode: 'create' | 'edit'
+
 }
 
 export interface ProjectLauncheableProps extends Launcheable, PageProps {

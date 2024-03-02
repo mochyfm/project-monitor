@@ -22,7 +22,8 @@
     outline: none;
 }
 
-.projectFindPathOfProject, .projectFormOpenMainFileButton {
+.projectFindPathOfProject,
+.projectFormOpenMainFileButton {
     border-radius: 5px;
     border: none;
     margin: 5px;
@@ -40,14 +41,16 @@
     right: 15px;
 }
 
-.projectFindPathOfProject, .projectFormOpenMainFileButton {
+.projectFindPathOfProject,
+.projectFormOpenMainFileButton {
     border: 1px solid;
     font-size: 12px;
     transition: background-color 0.3s ease-in;
     transition: color 0.2s ease-in;
 }
 
-.projectFindPathOfProject:hover, .projectFormOpenMainFileButton:hover {
+.projectFindPathOfProject:hover,
+.projectFormOpenMainFileButton:hover {
     cursor: pointer;
     color: var(--font-color);
     transition: background-color 0.2s ease-out;
@@ -76,8 +79,8 @@
     overflow-y: auto;
 }
 
-
-.launcheableScriptsList, .launcheableDependenciesList {
+.launcheableScriptsList,
+.launcheableDependenciesList {
     margin-top: 10px;
 }
 
@@ -87,7 +90,7 @@
     margin-bottom: 15px;
     justify-content: space-around;
     position: relative;
-} 
+}
 
 .launcheableLaunchFileDisplay {
     display: flex;
@@ -98,6 +101,13 @@
 
 .launcheableLaunchFileDisplay img {
     margin-right: 10px;
+}
+
+.launcheableProWatcherTreeStructure {
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
 }
 
 .scriptElement {
@@ -150,6 +160,22 @@
 .launcheableSdkAndVersion {
     display: flex;
     align-items: center;
+}
+
+button.launcheableSdkAndVersion {
+    color: var(--font-color);
+    font-size: var(--font-size);
+    padding: 10px 15px;
+    border: none;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    transition: 0.2s ease-in background-color;
+}
+
+button.launcheableSdkAndVersion:hover {
+    background-color: var(--secondary-color);
+    transition: 0.2s ease-out background-color;
+    cursor: pointer;
 }
 
 .launcheableSdkAndVersion img {

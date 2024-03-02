@@ -18,6 +18,7 @@ const ProjectListCard = (props: ProjectListCardProperties) => {
                             (launcheable: Launcheable, index: number) => {
                                 return (
                                     <LauncheableCard
+                                        proWatcher={launcheable.proWatcher}
                                         sdk={launcheable.sdk}
                                         nodeVersion={nodeVersion}
                                         key={index}
@@ -25,6 +26,7 @@ const ProjectListCard = (props: ProjectListCardProperties) => {
                                         name={launcheable.name}
                                         language={launcheable.language}
                                         preferedIde={launcheable.preferedIde}
+                                        edited={launcheable.edited}
                                     />
                                 )
                             },

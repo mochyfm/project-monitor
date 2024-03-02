@@ -7,7 +7,7 @@ const NewProject = (props: PageProps) => {
     console.log(nodeVersion);
     return ( 
         <div className='newProjectBody'>
-            <ProjectForm mode="create" nodeVersion={nodeVersion}/>
+            <ProjectForm nodeVersion={nodeVersion}/>
         </div>
     )
 }

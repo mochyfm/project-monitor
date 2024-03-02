@@ -20,12 +20,11 @@ function AppBrowser() {
             const node_version = await invoke<string>('get_node_version').catch(
                 (err) => {
                     console.error(err)
-                    return ''
+                    return '(Not Found)'
                 },
             )
             setNodeVersion(node_version)
         }
-
         fetchData()
     }, [])
 

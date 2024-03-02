@@ -6,6 +6,11 @@ import {
 } from '../types/interface.types'
 import { sendNotification } from '@tauri-apps/api/notification'
 import { detectArchitecture, detectDependencies } from './launcheable.utils'
+import { toast } from 'react-toastify'
+import { Collection, Project } from '../types/application.types'
+import { BaseDirectory, writeTextFile } from '@tauri-apps/api/fs'
+import Constants from '../constants/options.constants'
+import { getProjects } from './fetch.utils'
 
 export const renderPreferedIde = (ide: CompatibleIDEs) => {
     switch (ide) {
@@ -24,16 +29,6 @@ export const renderPreferedIde = (ide: CompatibleIDEs) => {
         default:
             return 'None'
     }
-}
-
-function tieneEspacios(path: string) {
-    const partes = path.split('\\')
-    for (let parte of partes) {
-        if (parte.includes(' ')) {
-            return true
-        }
-    }
-    return false
 }
 
 function selectIdeCommandToLaunch(ide?: CompatibleIDEs) {
@@ -56,7 +51,8 @@ function selectIdeCommandToLaunch(ide?: CompatibleIDEs) {
 
 export const openIde = (path?: string, ide?: CompatibleIDEs, sdk?: string) => {
     const ideCommandToLaunch = selectIdeCommandToLaunch(ide)
-    if (path && !tieneEspacios(path)) {
+
+    if (path) {
         console.log(`Launching IDE: ${ideCommandToLaunch}`)
         const ideLaunchCommand = new Command(
             'cmd',
@@ -73,6 +69,8 @@ export const openIde = (path?: string, ide?: CompatibleIDEs, sdk?: string) => {
         } catch (error) {
             console.error(error)
         }
+    } else {
+        toast.info('Please, make sure the path does not contain spaces.', { position: 'top-center', autoClose: 3000 })
     }
 }
 
@@ -199,7 +197,22 @@ export const getFileLanguage = (filename?: string): ProgrammingLanguage | undefi
 export const getFileExtension = (filename?: string): string | undefined => {
     const lastDotIndex = filename!.lastIndexOf('.');
     if (lastDotIndex === -1 || lastDotIndex === 0 || lastDotIndex === filename!.length - 1) {
-        return undefined; // No hay extensión
+        return undefined;
     }
     return filename!.slice(lastDotIndex + 1);
 }
+
+export const saveProject = async (project: Project) => {
+    try {
+        const projects: Collection = await getProjects();
+                projects.push(project);
+        const projectsJson = JSON.stringify(projects);
+        await writeTextFile(Constants.savedProjectsFile, projectsJson, {
+            dir: BaseDirectory.Resource,
+        });
+
+        console.log('Proyecto guardado con éxito:', project);
+    } catch (error) {
+        console.error('Error al guardar el proyecto:', error);
+    }
+};

@@ -54,7 +54,7 @@ export const groupDependenciesByTechnology = (
 
 export const detectArchitecture = (dependencies: Record<string, string>): ProjectTechnologies | null => {
     // Definimos los frameworks principales de frontend y backend
-    const frontendFrameworks = ['astro', 'react', 'preact', 'vue', 'svelte', 'next', 'angular'];
+    const frontendFrameworks = ['astro', 'next', 'remix', 'preact', 'vue', 'svelte', 'angular', 'react'];
     const backendFrameworks = ['express', 'nestjs', 'fastify', 'hibernate', 'jpa', 'liquibase'];
 
     // Buscamos el framework principal

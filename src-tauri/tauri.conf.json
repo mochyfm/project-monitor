@@ -7,7 +7,7 @@
         "distDir": "../dist"
     },
     "package": {
-        "productName": "project-monitor",
+        "productName": "ProWatcher",
         "version": "0.1.0"
     },
     "tauri": {
@@ -80,7 +80,7 @@
                 "icons/icon.icns",
                 "icons/icon.ico"
             ],
-            "identifier": "project-monitor",
+            "identifier": "ProWatcher",
             "longDescription": "",
             "macOS": {
                 "entitlements": null,

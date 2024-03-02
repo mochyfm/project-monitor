@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import {
-    FormLauncheable,
     Launcheable,
     Project,
     ProjectFormProps,
@@ -10,17 +9,27 @@ import ProjectLauncheable from './ProjectLauncheable'
 import { v4 as uuid4 } from 'uuid'
 import Constants from '../../../constants/options.constants'
 import { Bounce, toast } from 'react-toastify'
+import { saveProject } from '../../../utils/project.utils'
 
 const ProjectForm = (props: ProjectFormProps) => {
-    const { mode, nodeVersion } = props
+    const { nodeVersion } = props
 
     const defaultProject = {
         id: uuid4(),
         name: '',
-        launcheables: [] as FormLauncheable[],
+        launcheables: [] as Launcheable[],
     }
 
     const [projectData, setProjectData] = useState<Project>(defaultProject)
+
+    const placeholder = 'YourProject_01'
+
+    const inputStyle = {
+        width: `${
+            (projectData.name.length + 1) * 10 + `${placeholder}`.length * 15
+        }px`,
+        maxWidth: '100%',
+    }
 
     const clearForm = () => {
         setProjectData(defaultProject)
@@ -35,9 +44,14 @@ const ProjectForm = (props: ProjectFormProps) => {
         }))
     }
 
-    const addLauncheable = () => {
+    const addLauncheable = (isCustom?: boolean) => {
         if (projectData.launcheables.length < Constants.maxLauncheables) {
-            const newLauncheable: FormLauncheable = { id: uuid4(), name: '', edited: false }
+            const newLauncheable: Launcheable = {
+                id: uuid4(),
+                name: '',
+                edited: false,
+                proWatcher: isCustom ? isCustom : false,
+            }
             setProjectData((prevData) => ({
                 ...prevData,
                 launcheables: [...prevData.launcheables, newLauncheable],
@@ -71,6 +85,7 @@ const ProjectForm = (props: ProjectFormProps) => {
                 (launcheable: any) => launcheable.edited,
             )
             if (hasLauncheablesWithContent) {
+                saveProject(projectData)
                 toast.success('Project Saved!', {
                     position: 'top-center',
                     autoClose: 5000,
@@ -79,7 +94,7 @@ const ProjectForm = (props: ProjectFormProps) => {
                 })
             } else {
                 toast.error(
-                    'You have a launcheable without content, remove it or add minimum a name on it ',
+                    'You have a launcheable without content, remove it or add at least a name on it',
                     {
                         position: 'top-center',
                         autoClose: 5000,
@@ -89,9 +104,15 @@ const ProjectForm = (props: ProjectFormProps) => {
                 )
             }
         } else {
+            toast.error('You need to add a name to the project', {
+                position: 'top-center',
+                autoClose: 5000,
+                theme: 'dark',
+                transition: Bounce,
+            })
             console.error('Debe tener el nombre y 1 o más launcheables')
-            console.log(projectData)
         }
+        console.log(projectData)
     }
 
     return (
@@ -101,38 +122,41 @@ const ProjectForm = (props: ProjectFormProps) => {
                     name='name'
                     value={projectData.name}
                     className='projectInfoInput'
-                    placeholder='YourProject_01'
+                    placeholder={placeholder}
                     onChange={handleInput}
                     autoComplete='off'
+                    style={inputStyle}
                 />
             </div>
-            {mode === 'create' && (
-                <>
-                    <div className='projectLauncheableButtonPanel'>
-                        <label>
-                            Total launcheables:{' '}
-                            {projectData.launcheables.length}/
-                            {Constants.maxLauncheables}
-                        </label>
-                        <div>
-                            <button
-                                type='button'
-                                className='projectFormButton'
-                                onClick={addLauncheable}
-                            >
-                                Add Launcheable
-                            </button>
-                            <button
-                                type='button'
-                                className='projectFormClearButton'
-                                onClick={clearForm}
-                            >
-                                Clear Launcheables
-                            </button>
-                        </div>
-                    </div>
-                </>
-            )}
+            <div className='projectLauncheableButtonPanel'>
+                <label>
+                    Total launcheables: {projectData.launcheables.length}/
+                    {Constants.maxLauncheables}
+                </label>
+                <div>
+                    <button
+                        type='button'
+                        className='projectFormButton'
+                        onClick={() => addLauncheable()}
+                    >
+                        Add Launcheable
+                    </button>
+                    {/* <button
+                        type='button'
+                        className='projectFormButton'
+                        onClick={() => addLauncheable(true)}
+                    >
+                        Add Vanilla Launcheable
+                    </button> */}
+                    <button
+                        type='button'
+                        className='projectFormClearButton'
+                        onClick={clearForm}
+                    >
+                        Clear Launcheables
+                    </button>
+                </div>
+            </div>
             <div className='launcheablePannel'>
                 {projectData.launcheables.map((launcheable) => (
                     <ProjectLauncheable
@@ -153,6 +177,8 @@ const ProjectForm = (props: ProjectFormProps) => {
                         onEdit={handleLauncheableChange}
                         onDelete={removeLauncheable}
                         nodeVersion={nodeVersion}
+                        edited={launcheable.edited}
+                        proWatcher={launcheable.proWatcher}
                     />
                 ))}
             </div>
