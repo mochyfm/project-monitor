@@ -117,6 +117,17 @@
     cursor: pointer;
 }
 
+.launcheablePlayAndStopButton {
+    align-self: flex-end;
+    position: absolute;
+    right: 10%;
+    bottom: 4%;
+}
+
+.launcheablePlayAndStopButton:hover {
+    cursor: pointer;
+}
+
 .launcheableCardButtonPanel {
     position: absolute;
     top: calc(100% + 10px); /* Posición debajo del botón */

@@ -9,6 +9,10 @@ import {
 } from '../../utils/project.utils'
 import { findProjectFile } from '../../utils/fetch.utils'
 import { LauncheableCardProps } from '../../types/interface.types'
+import { CiPause1 } from 'react-icons/ci'
+import { CiPlay1 } from 'react-icons/ci'
+import { toast } from 'react-toastify'
+import { executeMavenOrSpring, executeNode } from '../../utils/manage.projects'
 
 const LauncheableCard = ({
     name,
@@ -17,18 +21,40 @@ const LauncheableCard = ({
     preferedIde,
     path,
     nodeVersion,
+    edited,
+    proWatcher,
+    architecture,
+    id,
+    dependencies,
+    launchFile,
+    mainPath,
+    script,
+    scripts,
+    sdkVersion,
+    structure,
 }: LauncheableCardProps) => {
     const [isSettingsIconVisible, setSettingsIconVisibility] =
         useState<boolean>(false)
 
-    useEffect(() => {
-        const projectStructure = async () => {
-            path &&
-                findProjectFile(path).then((projectData) => {
-                    console.log(projectData)
-                })
+    const [isProcessRunning, setIsProcessRunning] = useState<boolean>(false)
+
+    const launchProcess = () => {
+        switch (sdk) {
+            case 'node':
+                (scripts && path) && executeNode(path, scripts, () => { setIsProcessRunning(!isProcessRunning) });
+                break;
+            case 'maven':
+            case 'springboot':
+                path && executeMavenOrSpring(path, () => { setIsProcessRunning(!isProcessRunning) });
+                break;
+            case 'unknown':
+                toast.error('Unknown launcheable')
+                break;
         }
-        projectStructure()
+    }
+
+    useEffect(() => {
+       
     }, [])
 
     return (
@@ -89,6 +115,15 @@ const LauncheableCard = ({
                     <IoSettingsSharp size={Constants.iconsSize + 10} />
                 )}
             </div>
+            {isProcessRunning ? (
+                    <div onClick={launchProcess} className='launcheablePlayAndStopButton'>
+                        <CiPause1 size={Constants.iconsSize + 10} />
+                    </div>
+                ) : (
+                    <div onClick={launchProcess}  className='launcheablePlayAndStopButton'>
+                        <CiPlay1 size={Constants.iconsSize + 10} />
+                    </div>
+                )}
         </section>
     )
 }

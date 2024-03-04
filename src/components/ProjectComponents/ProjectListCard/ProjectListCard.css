@@ -2,6 +2,7 @@
     background-color: var(--primary-color);
     border-radius: 7px;
     padding: 20px 30px;
+    margin: 20px 0px;
     width: 100%;
 }
 
@@ -13,17 +14,24 @@
 .projectLauncheablesName {
     display: flex;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .projectListCardLauncheables {
-    border-radius: 10px;
-    padding: 20px;
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
     gap: 20px;
-    width: 100%;
-    margin: 0;
 }
 
-.projectListCardLauncheables > :nth-last-child(1):nth-child(odd) {
-    grid-column: span 2;
+.projectListCardLauncheables > * {
+    flex: 1 0 calc(50% - 10px);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+@media (max-width: 768px) {
+    .projectListCardLauncheables > * {
+        flex: 1 0 calc(100% - 10px);
+    }
 }
